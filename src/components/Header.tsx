@@ -188,9 +188,7 @@ const Header = () => {
               <SheetHeader>
                 <SheetTitle className="text-left">
                   <div className="flex items-center">
-                    <div className="w-8 h-8 bg-gradient-to-br from-secondary to-teal-light rounded-lg flex items-center justify-center">
-                      <span className="text-secondary-foreground font-bold text-lg">A</span>
-                    </div>
+                    <img src="/armada-logo.png" alt="Armada logo" className="w-8 h-8 object-contain rounded-lg" />
                     <div className="ml-2">
                       <span className="text-xl font-heading font-bold text-primary">ARMADA</span>
                     </div>
