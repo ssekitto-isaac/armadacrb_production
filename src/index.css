@@ -145,11 +145,42 @@
 
   /* Hero section */
   .hero-section {
-    @apply relative min-h-[600px] flex items-center justify-center overflow-hidden;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    min-height: 68vh;
   }
 
+  @media (max-width: 640px) {
+    .hero-section {
+      min-height: 56vh;
+    }
+  }
+
+  /* Ensure background images fill area */
+  .carousel-image {
+    background-position: center center;
+    background-size: cover;
+    transition: opacity 700ms ease-in-out, transform 700ms ease;
+    will-change: opacity, transform;
+  }
+
+  /* Overlay */
   .hero-overlay {
-    @apply absolute inset-0 bg-gradient-to-r from-[hsl(var(--hero-overlay))/85%] via-[hsl(var(--hero-overlay))/60%] to-transparent;
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    /* subtle dark gradient to improve text contrast */
+    background: linear-gradient(180deg, rgba(0,0,0,0.28), rgba(0,0,0,0.45));
+    mix-blend-mode: normal;
+  }
+
+  @media (max-width: 640px) {
+    /* slightly stronger on small screens for readability */
+    .hero-overlay {
+      background: linear-gradient(180deg, rgba(0,0,0,0.32), rgba(0,0,0,0.5));
+    }
   }
 
   /* Section styling */

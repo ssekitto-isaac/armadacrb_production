@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Menu, X, ChevronDown, Twitter, Linkedin, Instagram, Youtube } from "lucide-react";
+// import heroImage from "@assets/two_ladies_african american final.jpeg";
+import heroImage from "@/assets/hero-image.jpg";
 import {
   NavigationMenu,
   NavigationMenuContent,
