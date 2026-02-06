@@ -1,28 +1,41 @@
-import { NavLink as RouterNavLink, NavLinkProps } from "react-router-dom";
-import { forwardRef } from "react";
-import { cn } from "@/lib/utils";
+import { NavLink } from "@/components/NavLink";
 
-interface NavLinkCompatProps extends Omit<NavLinkProps, "className"> {
-  className?: string;
-  activeClassName?: string;
-  pendingClassName?: string;
-}
+const MainNav = () => {
+  return (
+    <nav className="flex items-center gap-8">
+      <NavLink
+        to="/"
+        className="text-sm font-medium text-foreground hover:text-secondary"
+        activeClassName="text-secondary"
+      >
+        Home
+      </NavLink>
 
-const NavLink = forwardRef<HTMLAnchorElement, NavLinkCompatProps>(
-  ({ className, activeClassName, pendingClassName, to, ...props }, ref) => {
-    return (
-      <RouterNavLink
-        ref={ref}
-        to={to}
-        className={({ isActive, isPending }) =>
-          cn(className, isActive && activeClassName, isPending && pendingClassName)
-        }
-        {...props}
-      />
-    );
-  },
-);
+      <NavLink
+        to="/product-suites"
+        className="text-sm font-medium text-foreground hover:text-secondary"
+        activeClassName="text-secondary"
+      >
+        Product Suites
+      </NavLink>
 
-NavLink.displayName = "NavLink";
+      <NavLink
+        to="/news"
+        className="text-sm font-medium text-foreground hover:text-secondary"
+        activeClassName="text-secondary"
+      >
+        News
+      </NavLink>
 
-export { NavLink };
+      <NavLink
+        to="/contact"
+        className="text-sm font-medium text-foreground hover:text-secondary"
+        activeClassName="text-secondary"
+      >
+        Contact
+      </NavLink>
+    </nav>
+  );
+};
+
+export default MainNav;
