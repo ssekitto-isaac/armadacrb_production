@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Menu, X, ChevronDown, Twitter, Linkedin, Instagram, Youtube } from "lucide-react";
 // import heroImage from "@assets/two_ladies_african american final.jpeg";
 import heroImage from "@/assets/hero-image.jpg";
@@ -38,38 +39,38 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { label: "Home", href: "#", active: true },
+  { label: "Home", href: "/", active: true },
   {
     label: "About Us",
-    href: "#about",
+    href: "/#about",
     subItems: [
-      { label: "About Armada CRB", href: "#about", description: "Learn about our company and values" },
-      { label: "Our Vision", href: "#vision", description: "Our vision for the future of credit reporting" },
-      { label: "Our Mission", href: "#mission", description: "Our mission to serve you better" },
-      { label: "Core Values", href: "#values", description: "The principles that guide us" },
+      { label: "About Armada CRB", href: "/#about", description: "Learn about our company and values" },
+      { label: "Our Vision", href: "/#vision", description: "Our vision for the future of credit reporting" },
+      { label: "Our Mission", href: "/#mission", description: "Our mission to serve you better" },
+      { label: "Core Values", href: "/#values", description: "The principles that guide us" },
     ],
   },
   {
     label: "Product Suites",
-    href: "#products",
+    href: "/product-suites",
     subItems: [
-      { label: "Credit Information & Risk Reports", href: "#credit-reports", description: "Actionable insights for credit decisions" },
-      { label: "Decision and Data Analytics", href: "#analytics", description: "Data-driven business intelligence" },
-      { label: "Portfolio & Risk Management", href: "#portfolio", description: "Comprehensive risk management solutions" },
-      { label: "Data Management", href: "#data-management", description: "Data is a valuable source of actionable insight" },
+      { label: "Credit Information & Risk Reports", href: "/product-suites", description: "Actionable insights for credit decisions" },
+      { label: "Decision and Data Analytics", href: "/product-suites", description: "Data-driven business intelligence" },
+      { label: "Portfolio & Risk Management", href: "/product-suites", description: "Comprehensive risk management solutions" },
+      { label: "Data Management", href: "/product-suites", description: "Data is a valuable source of actionable insight" },
     ],
   },
-  { label: "News", href: "#news" },
+  { label: "News", href: "/news" },
   {
     label: "Customer Information",
-    href: "#info",
+    href: "/#info",
     subItems: [
-      { label: "FAQs", href: "#faqs", description: "Frequently asked questions" },
-      { label: "Complaint Handling", href: "#complaints", description: "How we handle your concerns" },
-      { label: "Consumer Education", href: "#education", description: "Resources to improve your credit knowledge" },
+      { label: "FAQs", href: "/#faqs", description: "Frequently asked questions" },
+      { label: "Complaint Handling", href: "/#complaints", description: "How we handle your concerns" },
+      { label: "Consumer Education", href: "/#education", description: "Resources to improve your credit knowledge" },
     ],
   },
-  { label: "Contact Us", href: "#contact" },
+  { label: "Contact Us", href: "/contact" },
 ];
 
 const Header = () => {
@@ -89,7 +90,7 @@ const Header = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between py-4">
           {/* Logo */}
-          <a href="#" className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-2">
             <div className="flex items-center">
               <div className="w-10 h-10 bg-gradient-to-br from-secondary to-teal-light rounded-lg flex items-center justify-center">
                 <span className="text-secondary-foreground font-bold text-xl">A</span>
@@ -101,7 +102,7 @@ const Header = () => {
                 </span>
               </div>
             </div>
-          </a>
+          </Link>
 
           {/* Desktop Navigation */}
           <NavigationMenu className="hidden lg:flex">
@@ -123,19 +124,35 @@ const Header = () => {
                           {item.subItems.map((subItem) => (
                             <li key={subItem.label}>
                               <NavigationMenuLink asChild>
-                                <a
-                                  href={subItem.href}
-                                  className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                                >
-                                  <div className="text-sm font-medium leading-none text-foreground">
-                                    {subItem.label}
-                                  </div>
-                                  {subItem.description && (
-                                    <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                                      {subItem.description}
-                                    </p>
-                                  )}
-                                </a>
+                                {subItem.href.startsWith("/#") ? (
+                                  <a
+                                    href={subItem.href}
+                                    className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                                  >
+                                    <div className="text-sm font-medium leading-none text-foreground">
+                                      {subItem.label}
+                                    </div>
+                                    {subItem.description && (
+                                      <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                                        {subItem.description}
+                                      </p>
+                                    )}
+                                  </a>
+                                ) : (
+                                  <Link
+                                    to={subItem.href}
+                                    className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                                  >
+                                    <div className="text-sm font-medium leading-none text-foreground">
+                                      {subItem.label}
+                                    </div>
+                                    {subItem.description && (
+                                      <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                                        {subItem.description}
+                                      </p>
+                                    )}
+                                  </Link>
+                                )}
                               </NavigationMenuLink>
                             </li>
                           ))}
@@ -144,15 +161,27 @@ const Header = () => {
                     </>
                   ) : (
                     <NavigationMenuLink asChild>
-                      <a
-                        href={item.href}
-                        className={cn(
-                          "group inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium transition-colors hover:text-secondary focus:text-secondary focus:outline-none",
-                          item.active && "text-primary border-b-2 border-secondary"
-                        )}
-                      >
-                        {item.label}
-                      </a>
+                      {item.href.startsWith("/#") ? (
+                        <a
+                          href={item.href}
+                          className={cn(
+                            "group inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium transition-colors hover:text-secondary focus:text-secondary focus:outline-none",
+                            item.active && "text-primary border-b-2 border-secondary"
+                          )}
+                        >
+                          {item.label}
+                        </a>
+                      ) : (
+                        <Link
+                          to={item.href}
+                          className={cn(
+                            "group inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium transition-colors hover:text-secondary focus:text-secondary focus:outline-none",
+                            item.active && "text-primary border-b-2 border-secondary"
+                          )}
+                        >
+                          {item.label}
+                        </Link>
+                      )}
                     </NavigationMenuLink>
                   )}
                 </NavigationMenuItem>
@@ -218,26 +247,47 @@ const Header = () => {
                           <CollapsibleContent>
                             <div className="pl-4 flex flex-col gap-1 pb-2">
                               {item.subItems.map((subItem) => (
-                                <a
-                                  key={subItem.label}
-                                  href={subItem.href}
-                                  className="py-2 px-2 text-sm text-muted-foreground hover:text-secondary transition-colors rounded-md hover:bg-accent"
-                                  onClick={() => setIsMenuOpen(false)}
-                                >
-                                  {subItem.label}
-                                </a>
+                                subItem.href.startsWith("/#") ? (
+                                  <a
+                                    key={subItem.label}
+                                    href={subItem.href}
+                                    className="py-2 px-2 text-sm text-muted-foreground hover:text-secondary transition-colors rounded-md hover:bg-accent"
+                                    onClick={() => setIsMenuOpen(false)}
+                                  >
+                                    {subItem.label}
+                                  </a>
+                                ) : (
+                                  <Link
+                                    key={subItem.label}
+                                    to={subItem.href}
+                                    className="py-2 px-2 text-sm text-muted-foreground hover:text-secondary transition-colors rounded-md hover:bg-accent"
+                                    onClick={() => setIsMenuOpen(false)}
+                                  >
+                                    {subItem.label}
+                                  </Link>
+                                )
                               ))}
                             </div>
                           </CollapsibleContent>
                         </Collapsible>
                       ) : (
-                        <a
-                          href={item.href}
-                          className="block py-3 px-2 text-foreground hover:text-secondary transition-colors font-medium"
-                          onClick={() => setIsMenuOpen(false)}
-                        >
-                          {item.label}
-                        </a>
+                        item.href.startsWith("/#") ? (
+                          <a
+                            href={item.href}
+                            className="block py-3 px-2 text-foreground hover:text-secondary transition-colors font-medium"
+                            onClick={() => setIsMenuOpen(false)}
+                          >
+                            {item.label}
+                          </a>
+                        ) : (
+                          <Link
+                            to={item.href}
+                            className="block py-3 px-2 text-foreground hover:text-secondary transition-colors font-medium"
+                            onClick={() => setIsMenuOpen(false)}
+                          >
+                            {item.label}
+                          </Link>
+                        )
                       )}
                     </div>
                   ))}

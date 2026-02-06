@@ -1,7 +1,7 @@
 import TopBar from "@/components/TopBar";
 import Header from "@/components/Header";
-import HeroSection from "@/components/HeroSection";
-import ProductSuite from "@/components/ProductSuite";
+import ProductHero from "@/components/ProductHero";
+import ProductSuiteList from "@/components/ProductSuiteList";
 import Footer from "@/components/Footer";
 
 const Products = () => {
@@ -10,8 +10,8 @@ const Products = () => {
       <TopBar />
       <Header />
       <main>
-        <HeroSection variant="products" />
-        <ProductSuite />
+        <ProductHero />
+        <ProductSuiteList />
       </main>
       <Footer />
     </div>

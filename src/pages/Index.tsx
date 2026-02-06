@@ -1,4 +1,3 @@
-import { useLocation } from "react-router-dom";
 import TopBar from "@/components/TopBar";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
@@ -11,31 +10,19 @@ import StatsSection from "@/components/StatsSection";
 import Footer from "@/components/Footer";
 
 const Index = () => {
-  const location = useLocation();
-  const isProductSuitePage = location.pathname === "/product-suites";
-
   return (
     <div className="min-h-screen">
       <TopBar />
       <Header />
 
       <main>
-        <HeroSection variant={isProductSuitePage ? "products" : "home"} />
-
-        {isProductSuitePage ? (
-          <>
-            <ProductSuite />
-          </>
-        ) : (
-          <>
-            <StandardsSection />
-            <CoreValues />
-            <AboutSection />
-            <WhyChooseUs />
-            <ProductSuite />
-            <StatsSection />
-          </>
-        )}
+        <HeroSection variant="home" />
+        <StandardsSection />
+        <CoreValues />
+        <AboutSection />
+        <WhyChooseUs />
+        <ProductSuite />
+        <StatsSection />
       </main>
 
       <Footer />

@@ -1,22 +1,5 @@
-// import ProductHero from "@/components/ProductHero";
-import ProductSuiteList from "@/components/ProductSuiteList";
-
-const ProductSuitePage = () => {
-  return (
-    <main className="min-h-screen">
-      {/* Product-only hero */}
-      <ProductHero />
-
-      {/* Product-only content */}
-      <ProductSuiteList />
-    </main>
-  );
-};
-
-export default ProductSuitePage;
-
-
 import { ArrowRight, FileText, BarChart3, Shield, Database } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface Product {
   id: string;
@@ -56,9 +39,9 @@ const ProductSuiteList = () => {
               <div className="p-6">
                 <h3 className="text-lg font-heading font-bold text-foreground mb-3 line-clamp-2">{p.title}</h3>
                 <p className="text-muted-foreground text-sm mb-4 line-clamp-2">{p.description}</p>
-                <a href={p.link} className="inline-flex items-center gap-2 text-secondary font-semibold text-sm hover:gap-3 transition-all">
+                <Link to={p.link} className="inline-flex items-center gap-2 text-secondary font-semibold text-sm hover:gap-3 transition-all">
                   Read More <ArrowRight className="w-4 h-4" />
-                </a>
+                </Link>
               </div>
             </div>
           ))}
