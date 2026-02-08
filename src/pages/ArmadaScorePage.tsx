@@ -2,119 +2,137 @@ import TopBar from "@/components/TopBar";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import {
-  FaChartLine,
-  FaCheckCircle,
-  FaWallet,
-  FaListUl,
-  FaArrowUp,
-  FaEye,
-} from "react-icons/fa";
-import coupleImage from "@/assets/lady and the guy.png";
+  TrendingUp,
+  CheckCircle,
+  Zap,
+  ArrowLeft,
+  ArrowRight,
+} from "lucide-react";
+import { Link } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import coupleImage from "@/assets/lady and the guy final.png";
+
+interface ScoreFeature {
+  id: string;
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+}
+
+const scoreFeatures: ScoreFeature[] = [
+  {
+    id: "why-matters",
+    icon: <CheckCircle className="w-12 h-12 text-secondary" />,
+    title: "Why Your Armada Score Matters",
+    description:
+      "Lower interest rates, higher credit limits, faster approvals, and better terms on mortgages, mobile contracts, and more.",
+  },
+  {
+    id: "what-makes-up",
+    icon: <TrendingUp className="w-12 h-12 text-secondary" />,
+    title: "What Makes Up Your Score",
+    description:
+      "Payment history, credit utilization, credit history length, and account diversity all contribute to your comprehensive score.",
+  },
+  {
+    id: "how-to-improve",
+    icon: <Zap className="w-12 h-12 text-secondary" />,
+    title: "How to Improve Your Armada Score",
+    description:
+      "Pay on time every time, reduce outstanding debt, and check your report regularly to ensure accuracy and security.",
+  },
+];
 
 const ArmadaScorePage = () => {
+  const mainRef = useRef<HTMLElement | null>(null);
+  const heroRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (mainRef.current) {
+        mainRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }, 800);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <div className="min-h-screen bg-[#F7FAFC]">
+    <div className="min-h-screen flex flex-col">
       <TopBar />
       <Header />
-      {/* Hero Section */}
-      <section
-        className="relative w-full h-80 flex items-center justify-center bg-cover bg-center"
-        style={{
-          backgroundImage: `url(${coupleImage})`,
-          backgroundAttachment: "fixed",
-        }}
-      >
-        <div className="absolute inset-0 bg-[#1A2636]/70" />
-        <div className="relative z-10 text-center text-white">
-          <h1 className="text-4xl md:text-5xl font-bold mb-2">
-            ArmadaScore® Dashboard
-          </h1>
-          <p className="text-lg md:text-xl font-medium">
-            Home &nbsp; - &nbsp; ArmadaScore
-          </p>
+      <main className="flex-1">
+        {/* Hero Section */}
+        <div
+          ref={heroRef}
+          className="relative h-[500px] flex items-center justify-center md:justify-start bg-cover bg-center"
+          style={{ backgroundImage: `url(${coupleImage})` }}
+        >
+          <div className="absolute inset-0 bg-black/70" />
+          <div className="relative text-left px-4 md:px-0 md:pl-16">
+            <h1 className="text-4xl md:text-5xl font-heading font-bold text-white mb-4">
+              ArmadaScore®
+            </h1>
+            <p className="text-xl text-white">Our predictive score module makes it possible for creditors to <br/> access risk reports about credit applicants</p>
+          </div>
         </div>
-      </section>
-      {/* Main Content */}
-      <main className="flex flex-col items-center px-4 py-8 gap-12">
-        {/* Intro Section */}
-        <section className="w-full max-w-5xl text-center py-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-[#91CD95]">
-            Your Armada Score isn’t just a set of numbers. It’s a powerful
-            reflection of your financial health.
-          </h2>
-          <p className="text-lg text-gray-700 mb-8">
-            It shows lenders at a glance how responsibly you manage credit. Your
-            credit score is your “financial resume” that follows you through
-            every phase of your adult life.
-          </p>
+
+        {/* Main Content Section */}
+        <section ref={mainRef} className="py-20 bg-white">
+          <div className="container mx-auto px-4 max-w-5xl">
+            <div className="mb-16">
+              <h2 className="text-4xl font-bold text-secondary mb-6">
+                Your Armada Score isn't just a set of numbers
+              </h2>
+              <p className="text-lg text-foreground leading-relaxed">
+                It's a powerful reflection of your financial health. Your credit score is your "financial resume" that follows you through every phase of your adult life. It shows lenders at a glance how responsibly you manage credit, helping them make informed lending decisions.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {scoreFeatures.map((feature) => (
+                <div
+                  key={feature.id}
+                  className="bg-muted p-8 rounded-lg hover:shadow-lg transition-shadow duration-300"
+                >
+                  <div className="mb-4 flex justify-center">
+                    {feature.icon}
+                  </div>
+                  <h3 className="text-2xl font-bold text-foreground mb-4 text-center">
+                    {feature.title}
+                  </h3>
+                  <p className="text-foreground leading-relaxed">
+                    {feature.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            {/* Prev / Next Buttons */}
+            <div className="flex items-center justify-between mt-12 max-w-3xl mx-auto">
+              <Link to="/product-suites/credit-reports" className="inline-flex items-center gap-2 px-4 py-2 border rounded-md text-foreground hover:bg-gray-100">
+                <ArrowLeft className="w-4 h-4" /> Previous
+              </Link>
+              <Link to="/product-suites/analytics" className="inline-flex items-center gap-2 px-4 py-2 bg-secondary text-white rounded-md hover:opacity-90">
+                Next <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </div>
         </section>
-        {/* Cards Section */}
-        <section className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Why Your Armada Score Matters */}
-          <div className="bg-white rounded-lg shadow p-6 flex flex-col items-center">
-            <FaCheckCircle className="text-[#91CD95] text-4xl mb-4" />
-            <h3 className="text-xl font-bold mb-2 text-[#0066AB]">
-              Why Your Armada Score Matters
+
+        {/* Bottom CTA Section */}
+        <section
+          className="py-20 bg-cover bg-center relative"
+          style={{ backgroundImage: `url(${coupleImage})` }}
+        >
+          <div className="absolute inset-0 bg-black/40" />
+          <div className="container mx-auto px-4 relative z-10 text-center">
+            <h3 className="text-4xl font-bold text-white mb-4">
+              Build Your Financial Success
             </h3>
-            <ul className="text-left text-gray-700 text-base list-disc list-inside">
-              <li>
-                Lower Interest Rates – Save money over the life of your loans.
-              </li>
-              <li>
-                Higher Credit Limits – Access more purchasing power when you
-                need it most.
-              </li>
-              <li>Faster Approvals – Get your “Yes” in minutes, not days.</li>
-              <li>
-                Better Terms – Negotiate improved deals on mortgages, mobile
-                contracts, and more.
-              </li>
-            </ul>
-          </div>
-          {/* What Makes Up Your Score */}
-          <div className="bg-white rounded-lg shadow p-6 flex flex-col items-center">
-            <FaListUl className="text-[#91CD95] text-4xl mb-4" />
-            <h3 className="text-xl font-bold mb-2 text-[#0066AB]">
-              What Makes Up Your Score
-            </h3>
-            <ul className="text-left text-gray-700 text-base list-disc list-inside">
-              <li>
-                Payment History: Have you consistently paid your bills on time?
-              </li>
-              <li>
-                Credit Utilization: How much of your available credit are you
-                using?
-              </li>
-              <li>
-                Credit History Length: How long have you been managing credit
-                responsibly?
-              </li>
-              <li>
-                Account Diversity: What mix of loans and credit lines do you
-                hold?
-              </li>
-            </ul>
-          </div>
-          {/* How to Improve Your Armada Score */}
-          <div className="bg-white rounded-lg shadow p-6 flex flex-col items-center">
-            <FaArrowUp className="text-[#91CD95] text-4xl mb-4" />
-            <h3 className="text-xl font-bold mb-2 text-[#0066AB]">
-              How to Improve Your Armada Score
-            </h3>
-            <ul className="text-left text-gray-700 text-base list-disc list-inside">
-              <li>
-                Paying on time, every time: Even small delays can impact your
-                score.
-              </li>
-              <li>
-                Reducing outstanding debt: Keep credit usage below 30% of your
-                limit.
-              </li>
-              <li>
-                Checking your report regularly: Ensure there are no errors or
-                unauthorized activities.
-              </li>
-            </ul>
+            <p className="text-xl text-white max-w-2xl mx-auto">
+              Understand your ArmadaScore and take control of your financial future with informed decisions and responsible credit management.
+            </p>
           </div>
         </section>
       </main>

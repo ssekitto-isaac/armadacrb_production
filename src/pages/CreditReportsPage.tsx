@@ -1,7 +1,7 @@
 import TopBar from "@/components/TopBar";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import armada25 from "@/assets/armada-25.jpg";
+import armada25 from "@/assets/credit_report.png";
 import { FileText, BarChart3, CheckCircle, ArrowLeft, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -40,15 +40,15 @@ const CreditReportsPage = () => {
       <Header />
       <main className="flex-1">
         <div
-          className="relative h-[500px] flex items-center justify-center bg-cover bg-center"
+          className="relative h-[400px] flex items-center justify-center bg-cover bg-center"
           style={{ backgroundImage: `url(${armada25})` }}
         >
-          <div className="absolute inset-0 bg-black/40" />
+          <div className="absolute inset-0 bg-black/60" />
           <div className="relative text-center px-4">
-            <h1 className="text-5xl md:text-6xl font-heading font-bold text-white mb-4">
+            <h1 className="text-4xl md:text-5xl font-heading font-bold text-white mb-4">
               Credit Information & Risk Reports
             </h1>
-            <p className="text-xl text-white">Home - Product Suites - Credit Reports</p>
+            <p className="text-xl text-white">Our predictive score module makes it possible for creditors to access risk reports about credit applicants</p>
           </div>
         </div>
 

@@ -3,19 +3,29 @@ import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
 
 // Background images
-import hero1 from "@/assets/welcome2.png";
-import hero2 from "@/assets/credit_report.png";
+import hero1 from "@/assets/welcome4.png";
+import hero2 from "@/assets/credit-report-fine.png";
 import hero3 from "@/assets/analytics_african_men.png";
 import hero4 from "@/assets/women_standing_final2.png";
 import hero5 from "@/assets/risk_int.png";
-import hero6 from "@/assets/lady and the guy.png";
+import hero6 from "@/assets/lady and the guy final.png";
+import hero7 from "@/assets/welcome6.png";
+import hero8 from "@/assets/young-team.png";
 
-// Separate clean logo (only used on welcome slide)
-import armadaLogo from "@/assets/armada-logo.png"; // ← confirm this path is correct
+// Armada Logo
+import armadaLogo from "@/assets/armada-logo-whitewords.png";
 
+// Slide data
 const slides = [
   {
-    title: "", // Special handling for logo + gradient text
+    title: "",
+    subtitle: "We are global leaders in credit reporting and analytics",
+    cta: "View Now",
+    link: "#",
+    image: hero8,
+  },
+  {
+    title: "Welcome To ArmadaCRB",
     subtitle: "We are global leaders in credit reporting and analytics",
     cta: "View Now",
     link: "#",
@@ -34,7 +44,7 @@ const slides = [
     subtitle:
       "Our predictive score module makes it possible for creditors to access risk reports about credit applicants",
     cta: "View Now",
-    link: "#",
+    link: "/product-suites/credit-reports",
     image: hero2,
   },
   {
@@ -50,7 +60,7 @@ const slides = [
     subtitle:
       "Credit education is key to building a healthy credit culture. Learn more about credit today",
     cta: "View More",
-    link: "#",
+    link: "/credit-education",
     image: hero4,
   },
   {
@@ -63,10 +73,61 @@ const slides = [
   },
 ];
 
+// =======================
+// CheckeredLogo Component
+// =======================
+const CheckeredLogo = ({ src, gridSize = 8, tileSize = 40 }) => {
+  const center = (gridSize - 1) / 2;
+
+  return (
+    <div
+      className="relative inline-block"
+      style={{
+        width: `${gridSize * tileSize}px`,
+        height: `${gridSize * tileSize}px`,
+        display: "grid",
+        gridTemplateColumns: `repeat(${gridSize}, ${tileSize}px)`,
+        gridTemplateRows: `repeat(${gridSize}, ${tileSize}px)`,
+      }}
+    >
+      {Array.from({ length: gridSize * gridSize }).map((_, index) => {
+        const row = Math.floor(index / gridSize);
+        const col = index % gridSize;
+        const distance = Math.max(Math.abs(row - center), Math.abs(col - center));
+
+        return (
+          <motion.div
+            key={index}
+            style={{
+              backgroundImage: `url(${src})`,
+              backgroundSize: `${gridSize * tileSize}px ${gridSize * tileSize}px`,
+              backgroundPosition: `-${col * tileSize}px -${row * tileSize}px`,
+            }}
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: distance * 0.05, type: "spring", stiffness: 120 }}
+          />
+        );
+      })}
+    </div>
+  );
+};
+
+// =======================
+// HeroSection Component
+// =======================
 const HeroSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const intervalRef = useRef<number | null>(null);
   const [isPaused, setIsPaused] = useState(false);
+
+  const handleCTA = (e: any, slideIndex: number) => {
+    if (slideIndex === 0 || slideIndex === 1) {
+      e?.preventDefault?.();
+      const el = document.getElementById("standards");
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
 
   useEffect(() => {
     const start = () => {
@@ -117,42 +178,29 @@ const HeroSection = () => {
       <div className="relative z-10 container mx-auto px-28 py-28 h-full flex items-center">
         <div className="max-w-4xl animate-fade-in">
           {isWelcomeSlide ? (
-            <div className="space-y-6 md:space-y-8">
-              {/* Gradient "Welcome to" text */}
+            <div className="space-y-6 md:space-y-8 text-center md:text-left">
               <h2
                 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold tracking-wide bg-clip-text text-transparent"
                 style={{
-                  backgroundImage: "linear-gradient(to right, #91CD95, #0066AB)",
+                  backgroundImage: "linear-gradient(to right, #ffffff, #ffffff)",
                 }}
               >
                 Welcome to
               </h2>
 
-              {/* Smaller logo */}
-              <motion.div
-                key="welcome-logo"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
-                className="relative inline-block max-w-[380px] md:max-w-[420px] w-full mx-auto md:mx-0 block"
-              >
-                <img
-                  src={armadaLogo}
-                  alt="Armada Credit Bureau"
-                  className="w-full h-auto drop-shadow-2xl object-contain"
-                />
-                <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/10 to-blue-500/10 blur-3xl -z-10 rounded-3xl pointer-events-none" />
-              </motion.div>
+              {/* Checkered Logo Animation */}
+              <div className="mx-auto md:mx-0">
+                <CheckeredLogo src={armadaLogo} gridSize={8} tileSize={40} />
+              </div>
 
-              {/* Subtitle */}
-              <p className="text-xl text-primary-foreground max-w-xl mx-auto md:mx-0 text-center md:text-left">
+              <p className="text-xl text-primary-foreground max-w-xl mx-auto md:mx-0 mt-6">
                 {slides[0].subtitle}
               </p>
 
-              {/* CTA */}
-              <div className="flex items-center gap-6 justify-center md:justify-start">
+              <div className="flex items-center gap-6 justify-center md:justify-start mt-4">
                 <a
                   href={slides[0].link}
+                  onClick={(e) => handleCTA(e, 0)}
                   className="btn-secondary flex items-center gap-2 group"
                 >
                   {slides[0].cta}
@@ -172,9 +220,6 @@ const HeroSection = () => {
                     {i !== arr.length - 1 && <br />}
                   </span>
                 ))}
-                {slides[currentSlide].title === "ArmadaScore®" && (
-                  <sup className="text-2xl">®</sup>
-                )}
               </h1>
               <p className="text-xl text-primary-foreground mb-8 max-w-xl">
                 {slides[currentSlide].subtitle}
@@ -183,6 +228,7 @@ const HeroSection = () => {
               <div className="flex items-center gap-6">
                 <a
                   href={slides[currentSlide].link}
+                  onClick={(e) => handleCTA(e, currentSlide)}
                   className="btn-secondary flex items-center gap-2 group"
                 >
                   {slides[currentSlide].cta}

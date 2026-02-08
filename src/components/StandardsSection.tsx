@@ -23,7 +23,7 @@ const cards = [
 
 const StandardsSection = () => {
   return (
-    <section className="py-20 bg-background">
+    <section id="standards" className="py-20 bg-background">
       <div className="container mx-auto px-4">
         {/* Title */}
         <div className="text-center max-w-3xl mx-auto mb-16">
