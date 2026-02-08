@@ -10,12 +10,12 @@ import Footer from "@/components/Footer";
 
 
 // Replace these with your actual logo paths (optimized PNG/SVG, ideally 120-180px wide)
-import logo1 from "@/assets/armada-logo.png";
-import logo2 from "@/assets/armada-logo.png";
-import logo3 from "@/assets/armada-logo.png";
-import logo4 from "@/assets/armada-logo.png";
-import logo5 from "@/assets/armada-logo.png";
-import logo6 from "@/assets/armada-logo.png";
+import logo1 from "@/assets/GTCO Uganda.png";
+import logo2 from "@/assets/Housing Finance Bank Logo.png";
+import logo3 from "@/assets/Tropical-Bank.png";
+import logo4 from "@/assets/Finance Trust Bank Logo.png";
+//import logo5 from "@/assets/armada-logo.png";
+//import logo6 from "@/assets/armada-logo.png";
 
 
 const partners = [
@@ -23,8 +23,8 @@ const partners = [
   { name: "Company B", logo: logo2 },
   { name: "Company C", logo: logo3 },
   { name: "Company D", logo: logo4 },
-  { name: "Company E", logo: logo5 },
-  { name: "Company F", logo: logo6 },
+ // { name: "Company E", logo: logo5 },
+  //{ name: "Company F", logo: logo6 },
   // duplicate first few for seamless infinite scroll
   { name: "Company A", logo: logo1 },
   { name: "Company B", logo: logo2 },
@@ -164,20 +164,25 @@ const AboutPage = () => {
     </h2>
 
     <div className="relative">
-      {/* Optional subtle edge fade – looks more professional */}
+      {/* Left fade */}
       <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-16 md:w-32 bg-gradient-to-r from-white to-transparent" />
+      {/* Right fade */}
       <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-16 md:w-32 bg-gradient-to-l from-white to-transparent" />
 
       <div className="overflow-hidden">
         <div
-          className="flex animate-marquee whitespace-nowrap will-change-transform"
-          style={{ animationDuration: '35s' }} // adjust speed: 20s = fast, 40s = slow
+          className="flex animate-marquee whitespace-nowrap will-change-transform hover:pause-marquee"
+          style={{
+            animationDuration: "35s",           // ← adjust speed: 25s = faster, 45s = slower
+            animationTimingFunction: "linear",
+            animationIterationCount: "infinite",
+          }}
         >
-          {/* Show logos TWICE for seamless loop */}
-          {[...partners, ...partners].map((partner, index) => (
+          {/* Duplicate logos TWICE for seamless infinite loop */}
+          {[...partners, ...partners, ...partners].map((partner, index) => (
             <div
               key={index}
-              className="flex-shrink-0 mx-6 md:mx-12 lg:mx-16"
+              className="flex-shrink-0 mx-8 md:mx-12 lg:mx-16 xl:mx-20"
             >
               <img
                 src={partner.logo}

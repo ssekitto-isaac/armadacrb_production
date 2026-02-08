@@ -62,13 +62,16 @@ const AnalyticsPage = () => {
           className="relative h-[500px] flex items-center justify-center bg-cover bg-center"
           style={{ backgroundImage: `url(${armada23})` }}
         >
-          <div className="absolute inset-0 bg-black/40" />
-          <div className="relative text-center px-4">
-            <h1 className="text-5xl md:text-6xl font-heading font-bold text-white mb-4">
-              Data & Decision Analytics
-            </h1>
-            <p className="text-xl text-white">Home - Product Suites - Analytics</p>
-          </div>
+            <div className="absolute inset-0 bg-black/40" />
+         <div className="relative text-left px-0">
+  <h1 className="text-5xl md:text-6xl text-left font-heading font-bold text-white mb-4 leading-tight">
+    Data & Decision<br />
+    Analytics 
+  </h1>
+  <p className="text-xl text-white">
+    Home - Product Suites - Analytics
+  </p>
+</div>
         </div>
 
         <section className="py-20 bg-white">

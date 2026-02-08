@@ -11,7 +11,99 @@ import hero5 from "@/assets/risk_int.png";
 import hero6 from "@/assets/lady and the guy.png";
 
 // Separate clean logo (only used on welcome slide)
-import armadaLogo from "@/assets/armada-logo.png"; // ← confirm this path is correct
+import armadaLogo from "@/assets/armada-logo.png";
+
+// Animated Logo Component
+interface AnimatedLogoProps {
+  src: string;
+  alt: string;
+  className?: string;
+}
+
+function AnimatedLogo({ src, alt, className = "" }: AnimatedLogoProps) {
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  // Create 16 pieces (4x4 grid)
+  const pieces = Array.from({ length: 16 }, (_, i) => ({
+    id: i,
+    row: Math.floor(i / 4),
+    col: i % 4,
+  }));
+
+  return (
+    <div className={`relative inline-block ${className}`}>
+      {/* Hidden image to load */}
+      <img
+        src={src}
+        alt={alt}
+        className="invisible w-full h-auto"
+        onLoad={() => setImageLoaded(true)}
+      />
+
+      {/* Animated pieces overlay */}
+      {imageLoaded && (
+        <div className="absolute inset-0 w-full h-full">
+          {pieces.map((piece) => {
+            // Checkered pattern: alternate pieces come from different directions
+            const isCheckered = (piece.row + piece.col) % 2 === 0;
+            
+            // Organized positions based on checkered pattern
+            let initialX, initialY;
+            
+            if (isCheckered) {
+              // White squares - come from top-left
+              initialX = -400 - (piece.col * 50);
+              initialY = -400 - (piece.row * 50);
+            } else {
+              // Black squares - come from bottom-right
+              initialX = 400 + (piece.col * 50);
+              initialY = 400 + (piece.row * 50);
+            }
+
+            return (
+              <motion.div
+                key={piece.id}
+                initial={{
+                  x: initialX,
+                  y: initialY,
+                  opacity: 0,
+                  scale: 0.3,
+                  rotate: isCheckered ? -180 : 180,
+                }}
+                animate={{
+                  x: 0,
+                  y: 0,
+                  opacity: 1,
+                  scale: 1,
+                  rotate: 0,
+                }}
+                transition={{
+                  duration: 1.4,
+                  delay: (piece.row + piece.col) * 0.06, // Diagonal wave effect
+                  ease: [0.25, 0.46, 0.45, 0.94], // Custom easing
+                }}
+                className="absolute inset-0"
+                style={{
+                  clipPath: `inset(${piece.row * 25}% ${75 - piece.col * 25}% ${75 - piece.row * 25}% ${piece.col * 25}%)`,
+                }}
+              >
+                <img
+                  src={src}
+                  alt=""
+                  className="w-full h-auto drop-shadow-2xl object-contain"
+                  draggable={false}
+                />
+              </motion.div>
+            );
+          })}
+        </div>
+      )}
+      
+      {/* Gradient glow effect */}
+      <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/10 to-blue-500/10 blur-3xl -z-10 rounded-3xl pointer-events-none" />
+    </div>
+  );
+}
 
 const slides = [
   {
@@ -128,21 +220,12 @@ const HeroSection = () => {
                 Welcome to
               </h2>
 
-              {/* Smaller logo */}
-              <motion.div
-                key="welcome-logo"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
-                className="relative inline-block max-w-[380px] md:max-w-[420px] w-full mx-auto md:mx-0 block"
-              >
-                <img
-                  src={armadaLogo}
-                  alt="Armada Credit Bureau"
-                  className="w-full h-auto drop-shadow-2xl object-contain"
-                />
-                <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/10 to-blue-500/10 blur-3xl -z-10 rounded-3xl pointer-events-none" />
-              </motion.div>
+              {/* Animated logo with pieces coming together */}
+              <AnimatedLogo
+                src={armadaLogo}
+                alt="Armada Credit Bureau"
+                className="max-w-[380px] md:max-w-[420px] w-full mx-auto md:mx-0 block"
+              />
 
               {/* Subtitle */}
               <p className="text-xl text-primary-foreground max-w-xl mx-auto md:mx-0 text-center md:text-left">

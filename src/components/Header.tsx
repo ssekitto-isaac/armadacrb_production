@@ -35,7 +35,6 @@ const navItems: NavItem[] = [
     subItems: [
       { label: "About Armada CRB", href: "/AboutArmada", description: "Learn about our company and values" },
       { label: "Our People", href: "/OurPeople", description: "Meet our leadership" },
-    
     ],
   },
   {
@@ -56,12 +55,11 @@ const navItems: NavItem[] = [
       { label: "Self Inquiry", href: "/SelfInquiry", description: "Submit a self inquiry request" },
       { label: "Complaint Handling", href: "/DisputeResolutionForm", description: "How we handle your concerns" },
       { label: "Consumer Education", href: "/credit-education", description: "Resources to improve your credit knowledge" },
-       { label: "FAQs", href: "/FAQ", description: "Frequently asked questions" },
+      { label: "FAQs", href: "/FAQ", description: "Frequently asked questions" },
     ],
   },
   { label: "Contact Us", href: "/contact" },
 ];
-
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -80,7 +78,6 @@ export default function Header() {
   };
 
   const textColor = "text-[#1A2636]";
-  const hoverColor = "hover:text-[#91CD95]";
   const activeColor = "text-[#91CD95]";
   const activeBg = "bg-[#EAF7EC]";
 
@@ -89,7 +86,7 @@ export default function Header() {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between py-4">
           {/* Logo */}
-          <a href="/" className="flex items-center gap-2">
+          <a href="/" className="flex items-center gap-2 flex-shrink-0">
             <img
               src="/armada-logo.png"
               alt="Armada Credit Bureau"
@@ -99,8 +96,8 @@ export default function Header() {
           </a>
 
           {/* Desktop Nav */}
-          <NavigationMenu className="hidden lg:flex">
-            <NavigationMenuList className="gap-1">
+          <NavigationMenu className="hidden lg:flex ml-8 mr-auto">
+            <NavigationMenuList className="gap-0.5">
               {navItems.map((item) => {
                 const isItemActive = isActive(item.href);
 
@@ -110,16 +107,17 @@ export default function Header() {
                       <>
                         <NavigationMenuTrigger
                           className={cn(
-                            "bg-transparent focus:bg-transparent data-[state=open]:bg-transparent",
+                            "bg-transparent focus:bg-transparent data-[state=open]:bg-transparent hover:bg-transparent hover:text-[#1A2636] px-4 py-2",
                             textColor,
-                            hoverColor,
+                            "transition-none", // Remove all hover transitions
                             isItemActive && `${activeColor} border-b-2 border-[#91CD95]`
                           )}
                         >
                           {item.label}
                         </NavigationMenuTrigger>
+                        {/* Dropdown content - aligned directly under the trigger button */}
                         <NavigationMenuContent>
-                          <ul className="grid w-[400px] gap-3 p-4">
+                          <ul className="flex flex-col gap-1 p-4 min-w-[350px]">
                             {item.subItems.map((sub) => {
                               const isSubActive = isActive(sub.href);
                               return (
@@ -128,9 +126,9 @@ export default function Header() {
                                     <a
                                       href={sub.href}
                                       className={cn(
-                                        "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors",
+                                        "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none w-full text-left hover:text-[#1A2636]",
                                         isSubActive && `${activeColor} ${activeBg}`,
-                                        hoverColor
+                                        "transition-none" // No hover effect
                                       )}
                                     >
                                       <div className="text-sm font-medium leading-none">{sub.label}</div>
@@ -152,9 +150,9 @@ export default function Header() {
                         <a
                           href={item.href}
                           className={cn(
-                            "group inline-flex h-10 items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium transition-colors",
+                            "group inline-flex h-10 items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium hover:text-[#1A2636]",
                             textColor,
-                            hoverColor,
+                            "transition-none", // No hover effect
                             isItemActive && `${activeColor} border-b-2 border-[#91CD95]`
                           )}
                         >
@@ -168,8 +166,8 @@ export default function Header() {
             </NavigationMenuList>
           </NavigationMenu>
 
-          {/* Desktop Socials – updated hrefs */}
-          <div className="hidden lg:flex items-center gap-5">
+          {/* Desktop Socials */}
+          <div className="hidden lg:flex items-center gap-5 ml-auto">
             <SocialLink icon={Twitter} href="https://x.com/ArmadaCRB" />
             <SocialLink icon={Linkedin} href="https://ug.linkedin.com/company/armada-credit-bureau" />
             <SocialLink icon={Instagram} href="#" />
@@ -205,14 +203,14 @@ export default function Header() {
                           className={cn(
                             "flex w-full items-center justify-between py-3 px-3 font-medium rounded-md",
                             textColor,
-                            hoverColor,
+                            "transition-none", // No hover effect
                             isActive(item.href) && activeColor
                           )}
                         >
                           {item.label}
                           <ChevronDown
                             className={cn(
-                              "h-4 w-4 transition-transform",
+                              "h-4 w-4 transition-transform duration-200",
                               openMobileDropdowns.includes(item.label) && "rotate-180"
                             )}
                           />
@@ -223,9 +221,9 @@ export default function Header() {
                               key={sub.label}
                               href={sub.href}
                               className={cn(
-                                "block py-2.5 px-3 text-sm rounded-md transition-colors",
-                                isActive(sub.href) ? activeColor : "text-muted-foreground",
-                                hoverColor
+                                "block py-2.5 px-3 text-sm rounded-md",
+                                "transition-none", // No hover effect
+                                isActive(sub.href) ? activeColor : "text-muted-foreground"
                               )}
                               onClick={() => setIsMenuOpen(false)}
                             >
@@ -240,7 +238,7 @@ export default function Header() {
                         className={cn(
                           "block py-3 px-3 font-medium rounded-md",
                           textColor,
-                          hoverColor,
+                          "transition-none", // No hover effect
                           isActive(item.href) && activeColor
                         )}
                         onClick={() => setIsMenuOpen(false)}
@@ -252,7 +250,7 @@ export default function Header() {
                 ))}
               </nav>
 
-              {/* Mobile Socials – updated hrefs */}
+              {/* Mobile Socials */}
               <div className="flex justify-center gap-6 mt-10 pt-6 border-t">
                 <SocialLink icon={Twitter} size={20} href="https://x.com/ArmadaCRB" />
                 <SocialLink icon={Linkedin} size={20} href="https://ug.linkedin.com/company/armada-credit-bureau" />
@@ -267,16 +265,16 @@ export default function Header() {
   );
 }
 
-// Updated SocialLink to accept href
+// SocialLink - no hover color changes
 function SocialLink({ icon: Icon, size = 20, href = "#" }: { icon: any; size?: number; href?: string }) {
   return (
     <a 
       href={href}
       target={href !== "#" ? "_blank" : undefined}
       rel={href !== "#" ? "noopener noreferrer" : undefined}
-      className="text-muted-foreground hover:text-[#91CD95] transition-colors"
+      className="text-muted-foreground transition-none" // No hover effect
     >
-      <Icon className={`w-${size/4} h-${size/4}`} />
+      <Icon className="w-5 h-5" />
     </a>
   );
 }
