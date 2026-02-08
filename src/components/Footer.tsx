@@ -13,19 +13,19 @@ import analyticsImage from "@/assets/analytics_african_men.png";
 
 const Footer = () => {
   const quickLinks = [
-    "About Us",
-    "Our Services",
-    "Credit Reports",
-    "Analytics",
-    "Contact Us",
+    { label: "About Us", href: "/AboutArmada" },
+    { label: "Our Services", href: "/product-suites" },
+    { label: "Credit Reports", href: "/product-suites/credit-reports" },
+    { label: "Analytics", href: "/product-suites/analytics" },
+    { label: "Contact Us", href: "/contact" },
   ];
 
   const services = [
-    "Credit Information",
-    "Risk Reports",
-    "Data Analytics",
-    "Portfolio Management",
-    "Data Management",
+    { label: "Credit Information", href: "/product-suites/credit-reports" },
+    { label: "Risk Reports", href: "/product-suites/credit-reports" },
+    { label: "Data Analytics", href: "/product-suites/analytics" },
+    { label: "Portfolio Management", href: "/product-suites/portfolio" },
+    { label: "Data Management", href: "/product-suites/data-management" },
   ];
 
   return (
@@ -64,13 +64,17 @@ const Footer = () => {
             </p>
             <div className="flex gap-4">
               <a
-                href="#"
+                href="https://x.com/ArmadaCRB"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-secondary transition-colors"
               >
                 <Twitter className="w-5 h-5" />
               </a>
               <a
-                href="#"
+                href="https://ug.linkedin.com/company/armada-credit-bureau"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-secondary transition-colors"
               >
                 <Linkedin className="w-5 h-5" />
@@ -94,14 +98,14 @@ const Footer = () => {
           <div>
             <h3 className="text-xl font-heading font-bold mb-6">Quick Links</h3>
             <ul className="space-y-3">
-              {quickLinks.map((link) => (
-                <li key={link}>
+              {quickLinks.map((item) => (
+                <li key={item.label}>
                   <a
-                    href="#"
+                    href={item.href}
                     className="footer-link flex items-center gap-2 group"
                   >
                     <ArrowRight className="w-4 h-4 text-secondary group-hover:translate-x-1 transition-transform" />
-                    {link}
+                    {item.label}
                   </a>
                 </li>
               ))}
@@ -114,14 +118,14 @@ const Footer = () => {
               Our Services
             </h3>
             <ul className="space-y-3">
-              {services.map((service) => (
-                <li key={service}>
+              {services.map((item) => (
+                <li key={item.label}>
                   <a
-                    href="#"
+                    href={item.href}
                     className="footer-link flex items-center gap-2 group"
                   >
                     <ArrowRight className="w-4 h-4 text-secondary group-hover:translate-x-1 transition-transform" />
-                    {service}
+                    {item.label}
                   </a>
                 </li>
               ))}

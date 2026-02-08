@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from "react";
-import { Play, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
-// import heroImage from "@/assets/hero-image.jpg";
-// import hero1 from "@/assets/two_ladies_african american final.jpeg";
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { motion } from "framer-motion";
+
+// Background images
 import hero1 from "@/assets/welcome2.png";
 import hero2 from "@/assets/credit_report.png";
 import hero3 from "@/assets/analytics_african_men.png";
@@ -9,20 +10,21 @@ import hero4 from "@/assets/women_standing_final2.png";
 import hero5 from "@/assets/risk_int.png";
 import hero6 from "@/assets/lady and the guy.png";
 
+// Separate clean logo (only used on welcome slide)
+import armadaLogo from "@/assets/armada-logo.png"; // ← confirm this path is correct
+
 const slides = [
   {
-    title: "Welcome to\nArmadaCRB",
+    title: "", // Special handling for logo + gradient text
     subtitle: "We are global leaders in credit reporting and analytics",
     cta: "View Now",
     link: "#",
     image: hero1,
   },
-
   {
     title: "ArmadaScore®",
     subtitle:
       "Our predictive score module makes it possible for creditors to access risk reports about credit applicants",
-    //subtitle: "A proprietary credit scoring model that provides a comprehensive assessment of an individual's creditworthiness",
     cta: "View Now",
     link: "/armadascore",
     image: hero6,
@@ -88,71 +90,121 @@ const HeroSection = () => {
     setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
   const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slides.length);
 
+  const isWelcomeSlide = currentSlide === 0;
+
   return (
     <section
-      className="hero-section h-[512px]"
+      className="hero-section h-[512px] relative overflow-hidden"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      {/* Background Images (stacked for cross-fade) */}
+      {/* Background Images */}
       {slides.map((slide, index) => (
         <div
           key={index}
-          className={`absolute inset-0 bg-cover bg-center bg-no-repeat carousel-image ${index === currentSlide ? "opacity-100 z-0" : "opacity-0 -z-10"}`}
+          className={`absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000 ${
+            index === currentSlide ? "opacity-100" : "opacity-0"
+          }`}
           style={{ backgroundImage: `url(${slide.image})` }}
           aria-hidden={index !== currentSlide}
         />
       ))}
 
       {/* Overlay */}
-      <div className="hero-overlay" />
+      <div className="hero-overlay absolute inset-0" />
 
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-28 py-28">
-        <div className="max-w-3xl animate-fade-in">
-          <h1
-            key={currentSlide}
-            className="text-4xl md:text-3xl lg:text-5xl font-heading font-bold text-primary-foreground mb-6 animate-slide-in-left"
-          >
-            {slides[currentSlide].title.split("\n").map((line, i, arr) => (
-              <span key={i}>
-                {line}
-                {i !== arr.length - 1 && <br />}
-              </span>
-            ))}
-            {slides[currentSlide].title === "ArmadaScore®" && (
-              <sup className="text-2xl">®</sup>
-            )}
-          </h1>
-          <p className="text-xl text-primary-foreground mb-8 max-w-xl">
-            {slides[currentSlide].subtitle}
-          </p>
+      <div className="relative z-10 container mx-auto px-28 py-28 h-full flex items-center">
+        <div className="max-w-4xl animate-fade-in">
+          {isWelcomeSlide ? (
+            <div className="space-y-6 md:space-y-8">
+              {/* Gradient "Welcome to" text */}
+              <h2
+                className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold tracking-wide bg-clip-text text-transparent"
+                style={{
+                  backgroundImage: "linear-gradient(to right, #91CD95, #0066AB)",
+                }}
+              >
+                Welcome to
+              </h2>
 
-          <div className="flex items-center gap-6">
-            {/* <button className="w-16 h-16 rounded-full bg-primary-foreground/20 backdrop-blur-sm flex items-center justify-center hover:bg-primary-foreground/30 transition-all duration-300 border border-primary-foreground/30">
-              <Play className="w-6 h-6 text-primary-foreground ml-1" fill="currentColor" />
-            </button> */}
+              {/* Smaller logo */}
+              <motion.div
+                key="welcome-logo"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                className="relative inline-block max-w-[380px] md:max-w-[420px] w-full mx-auto md:mx-0 block"
+              >
+                <img
+                  src={armadaLogo}
+                  alt="Armada Credit Bureau"
+                  className="w-full h-auto drop-shadow-2xl object-contain"
+                />
+                <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/10 to-blue-500/10 blur-3xl -z-10 rounded-3xl pointer-events-none" />
+              </motion.div>
 
-            <a
-              href={slides[currentSlide].link}
-              className="btn-secondary flex items-center gap-2 group"
-            >
-              {slides[currentSlide].cta}
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </a>
-          </div>
+              {/* Subtitle */}
+              <p className="text-xl text-primary-foreground max-w-xl mx-auto md:mx-0 text-center md:text-left">
+                {slides[0].subtitle}
+              </p>
+
+              {/* CTA */}
+              <div className="flex items-center gap-6 justify-center md:justify-start">
+                <a
+                  href={slides[0].link}
+                  className="btn-secondary flex items-center gap-2 group"
+                >
+                  {slides[0].cta}
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </a>
+              </div>
+            </div>
+          ) : (
+            <>
+              <h1
+                key={currentSlide}
+                className="text-4xl md:text-3xl lg:text-5xl font-heading font-bold text-primary-foreground mb-6 animate-slide-in-left"
+              >
+                {slides[currentSlide].title.split("\n").map((line, i, arr) => (
+                  <span key={i}>
+                    {line}
+                    {i !== arr.length - 1 && <br />}
+                  </span>
+                ))}
+                {slides[currentSlide].title === "ArmadaScore®" && (
+                  <sup className="text-2xl">®</sup>
+                )}
+              </h1>
+              <p className="text-xl text-primary-foreground mb-8 max-w-xl">
+                {slides[currentSlide].subtitle}
+              </p>
+
+              <div className="flex items-center gap-6">
+                <a
+                  href={slides[currentSlide].link}
+                  className="btn-secondary flex items-center gap-2 group"
+                >
+                  {slides[currentSlide].cta}
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </a>
+              </div>
+            </>
+          )}
         </div>
 
         {/* Navigation arrows */}
         <button
           onClick={prevSlide}
           className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-primary-foreground/10 backdrop-blur-sm flex items-center justify-center hover:bg-primary-foreground/20 transition-all text-primary-foreground"
+          aria-label="Previous slide"
         >
           <ChevronLeft className="w-6 h-6" />
         </button>
         <button
           onClick={nextSlide}
           className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-primary-foreground/10 backdrop-blur-sm flex items-center justify-center hover:bg-primary-foreground/20 transition-all text-primary-foreground"
+          aria-label="Next slide"
         >
           <ChevronRight className="w-6 h-6" />
         </button>

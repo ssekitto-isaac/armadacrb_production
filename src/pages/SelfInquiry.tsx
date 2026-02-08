@@ -1,9 +1,26 @@
 import { useState } from "react";
-import { FileText, Phone, Calendar, PenTool, Upload, CheckCircle2, AlertCircle, ChevronDown, Shield, Clock, User, Mail, MapPin, CreditCard, ChevronRight } from "lucide-react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import {
+  FileText,
+  Phone,
+  Calendar,
+  PenTool,
+  Upload,
+  CheckCircle2,
+  AlertCircle,
+  ChevronRight,
+  Shield,
+  Clock,
+  User,
+  MapPin,
+  CreditCard,
+  Send,
+} from "lucide-react";
 import TopBar from "@/components/TopBar";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import LiveChatWidget from "@/components/LiveChat";
+
+import heroImage from "@/assets/men_armada.jpeg";
 
 const SelfInquiry = () => {
   const [formData, setFormData] = useState({
@@ -21,83 +38,10 @@ const SelfInquiry = () => {
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  /**
-   * 3D TILT CARD FOR PROCESS STEPS
-   */
-  const ProcessStepCard = ({ step, index }: { step: any; index: number }) => {
-    const x = useMotionValue(0);
-    const y = useMotionValue(0);
-    const mouseXSpring = useSpring(x);
-    const mouseYSpring = useSpring(y);
-    const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["8deg", "-8deg"]);
-    const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-8deg", "8deg"]);
-
-    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-      const rect = e.currentTarget.getBoundingClientRect();
-      x.set((e.clientX - rect.left) / rect.width - 0.5);
-      y.set((e.clientY - rect.top) / rect.height - 0.5);
-    };
-
-    const handleMouseLeave = () => {
-      x.set(0);
-      y.set(0);
-    };
-
-    return (
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: index * 0.15 }}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-        style={{ rotateY, rotateX, transformStyle: "preserve-3d" }}
-        className="relative"
-      >
-        <div
-          style={{ transform: "translateZ(0px)", transformStyle: "preserve-3d" }}
-          className="group relative bg-white rounded-[2rem] p-8 border border-slate-200 hover:border-emerald-200 shadow-lg hover:shadow-2xl transition-all duration-500"
-        >
-          {/* Connecting Line */}
-          {index < 3 && (
-            <div className="hidden lg:block absolute top-1/2 -right-8 w-16 h-0.5 bg-gradient-to-r from-emerald-300 to-blue-300 -translate-y-1/2 z-0" />
-          )}
-
-          {/* Icon */}
-          <div
-            style={{ transform: "translateZ(50px)" }}
-            className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-blue-50 to-emerald-50 flex items-center justify-center group-hover:scale-110 transition-transform duration-500 shadow-md"
-          >
-            <div className="text-blue-900 group-hover:text-emerald-600 transition-colors">
-              {step.icon}
-            </div>
-          </div>
-
-          {/* Step Number */}
-          <div
-            style={{ transform: "translateZ(40px)" }}
-            className="absolute top-4 right-4 w-8 h-8 rounded-full bg-emerald-500 text-white text-sm font-bold flex items-center justify-center shadow-lg"
-          >
-            {index + 1}
-          </div>
-
-          {/* Content */}
-          <div style={{ transform: "translateZ(30px)" }} className="text-center">
-            <h3 className="text-xl font-bold text-slate-900 mb-3">{step.title}</h3>
-            <p className="text-slate-600 text-sm leading-relaxed">{step.description}</p>
-          </div>
-
-          {/* Hover Glow */}
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 to-emerald-500/0 group-hover:from-blue-500/5 group-hover:to-emerald-500/5 rounded-[2rem] transition-colors duration-700 pointer-events-none" />
-        </div>
-      </motion.div>
-    );
-  };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitted(true);
-    setTimeout(() => setIsSubmitted(false), 5000);
-    // Reset form
+    setTimeout(() => setIsSubmitted(false), 6000);
     setFormData({
       firstName: "",
       lastName: "",
@@ -113,9 +57,7 @@ const SelfInquiry = () => {
     });
   };
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -127,305 +69,222 @@ const SelfInquiry = () => {
 
   const processSteps = [
     {
-      icon: <FileText className="w-10 h-10" />,
+      icon: FileText,
       title: "Complete Form",
-      description: "Fill the Corporate Self Inquiry Request Form below",
+      description: "Fill the Corporate Self Inquiry Request Form below.",
     },
     {
-      icon: <Phone className="w-10 h-10" />,
+      icon: Phone,
       title: "Book Appointment",
-      description: "Call 0800280180 or 0326301025 to schedule your collection",
+      description: "Toll Free line 0800280180\nOffice line 0326301025",
     },
     {
-      icon: <Calendar className="w-10 h-10" />,
+      icon: Calendar,
       title: "Visit Our Office",
-      description: "Arrive on time with original documents for verification",
+      description: "Arrive on time on date of appointment.",
     },
     {
-      icon: <PenTool className="w-10 h-10" />,
+      icon: PenTool,
       title: "Collect Report",
-      description: "Receive your Self Inquiry Report and sign collection note",
+      description: "Collect Self Inquiry Report and sign for collection Note.",
     },
-  ];
-
-  // Background images for marquee
-  const backgroundImages = [
-    "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&h=300&fit=crop",
-    "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop",
-    "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop",
-    "https://images.unsplash.com/photo-1543286386-713bdd548da4?w=400&h=300&fit=crop",
-    "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=400&h=300&fit=crop",
-    "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&h=300&fit=crop",
   ];
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] font-sans text-slate-900">
+    <div className="min-h-screen bg-background flex flex-col">
       <TopBar />
       <Header />
 
-      {/* HERO SECTION */}
-      <section className="relative pt-32 pb-20 overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
-        {/* Animated Background Marquee */}
-        <div className="absolute inset-0 opacity-5 overflow-hidden">
-          <div className="marquee-container flex gap-8">
-            <div className="marquee-content flex gap-8 animate-marquee">
-              {backgroundImages.map((img, i) => (
-                <div key={i} className="flex-shrink-0 w-80 h-60 rounded-2xl overflow-hidden">
-                  <img src={img} alt="" className="w-full h-full object-cover" />
-                </div>
-              ))}
-            </div>
-            <div className="marquee-content flex gap-8 animate-marquee" aria-hidden="true">
-              {backgroundImages.map((img, i) => (
-                <div key={i} className="flex-shrink-0 w-80 h-60 rounded-2xl overflow-hidden">
-                  <img src={img} alt="" className="w-full h-full object-cover" />
-                </div>
-              ))}
+      <main className="flex-grow">
+        {/* Hero – matched to DisputeResolution */}
+        <section className="relative h-[420px] md:h-[520px] overflow-hidden">
+          <div
+            className="absolute inset-0 bg-cover bg-center transition-transform duration-[1500ms] scale-105 hover:scale-110"
+            style={{ backgroundImage: `url(${heroImage})` }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-primary/65 via-primary/75 to-primary/85" />
+
+          <div className="relative z-10 container mx-auto px-6 md:px-20 lg:px-28 h-full flex items-center">
+            <div className="max-w-3xl">
+              <div className="flex items-center gap-3 text-primary-foreground/80 text-sm uppercase tracking-wider mb-5">
+                <span>Home</span>
+                <ChevronRight className="w-4 h-4" />
+                <span className="font-semibold">Self Inquiry</span>
+              </div>
+
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-primary-foreground mb-5 leading-tight">
+                Self Inquiry
+              </h1>
+
+              <div className="flex flex-col sm:flex-row gap-4">
+                <a
+                  href="#form"
+                  className="btn-secondary inline-flex items-center gap-3 px-7 py-4 text-base font-semibold group shadow-md"
+                >
+                  Start Request Now
+                  <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </a>
+                <a
+                  href="tel:0800280180"
+                  className="inline-flex items-center gap-3 px-6 py-4 bg-primary-foreground/10 backdrop-blur-sm rounded-full text-primary-foreground hover:bg-primary-foreground/20 transition-all text-base"
+                >
+                  <Phone className="w-5 h-5" />
+                  Book via Phone
+                </a>
+              </div>
             </div>
           </div>
-        </div>
+        </section>
 
-        {/* Animated Background Pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-20 left-20 w-72 h-72 bg-emerald-500 rounded-full blur-[120px] animate-pulse" />
-          <div className="absolute bottom-20 right-20 w-96 h-96 bg-blue-500 rounded-full blur-[120px] animate-pulse animation-delay-2000" />
-        </div>
-
-        <div className="container mx-auto px-6 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center"
-          >
-            {/* Breadcrumb */}
-            <div className="flex items-center justify-center gap-2 text-sm text-emerald-300 mb-8">
-              <span className="hover:text-white transition-colors cursor-pointer">Home</span>
-              <ChevronRight className="w-4 h-4" />
-              <span className="text-white font-semibold">Self Inquiry</span>
+        {/* Process Steps – adjusted spacing & sizing to match rhythm */}
+        <section className="py-16 -mt-12 relative z-10 bg-muted">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-10">
+              <span className="section-label">Easy Process</span>
+              <h2 className="section-title-dark mb-4">How to Get Your Report</h2>
+              <p className="text-base text-muted-foreground max-w-2xl mx-auto">
+                Follow these simple steps to access your credit information securely.
+              </p>
             </div>
 
-            <h1 className="text-5xl md:text-7xl font-black text-white mb-6 leading-tight">
-              Self Inquiry
-            </h1>
-           {} <p className="text-xl text-blue-100 max-w-2xl mx-auto leading-relaxed">
-              Access your comprehensive credit report with our secure self-service portal
-            </p>
-          </motion.div>
-        </div>
-
-        {/* Bottom Wave - Blue wave with green fill */}
-        <div className="absolute bottom-0 left-0 right-0">
-          <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
-            {/* Green bottom fill */}
-           { <path d="M0 0L60 10C120 20 240 40 360 46.7C480 53 600 47 720 43.3C840 40 960 40 1080 46.7C1200 53 1320 67 1380 73.3L1440 80V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0V0Z" fill="#e4eeeb"/>}
-            {/* Blue wave on top */}
-            <path d="M0 0L60 10C120 20 240 40 360 46.7C480 53 600 47 720 43.3C840 40 960 40 1080 46.7C1200 53 1320 67 1380 73.3L1440 80V0H1380C1320 0 1200 0 1080 0C960 0 840 0 720 0C600 0 480 0 360 0C240 0 120 0 60 0H0V0Z" fill="#240687" opacity="0.8"/>
-          </svg>
-        </div>
-      </section>
-
-      {/* PROCESS STEPS */}
-      <section className="py-20 -mt-10 relative z-10">
-        <div className="container mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
-              Steps to getting your report
-            </h2>
-            <p className="text-lg text-slate-600">A simple 4-step process to access your credit information</p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-4 relative">
-            {processSteps.map((step, index) => (
-              <ProcessStepCard key={index} step={step} index={index} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* IMPORTANT INFO BANNER */}
-      <section className="py-12 bg-gradient-to-r from-blue-50 to-emerald-50 border-y border-blue-100">
-        <div className="container mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-            >
-              <div className="flex items-start gap-4 mb-6">
-                <div className="w-12 h-12 rounded-xl bg-blue-900 flex items-center justify-center flex-shrink-0">
-                  <Clock className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-slate-900 mb-2">Collection Hours</h3>
-                  <p className="text-lg text-slate-700 font-semibold">
-                    Appointments: 10am - 4pm (Mon - Fri)
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {processSteps.map((step, index) => (
+                <div
+                  key={index}
+                  className="bg-background rounded-2xl shadow-xl border border-muted p-6 text-center transition-all hover:shadow-2xl"
+                >
+                  <div className="w-16 h-16 rounded-2xl bg-secondary/10 flex items-center justify-center mx-auto mb-6">
+                    <step.icon className="w-8 h-8 text-secondary" />
+                  </div>
+                  <h3 className="text-xl font-heading font-bold mb-3">{step.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line">
+                    {step.description}
                   </p>
                 </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-              className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-white/80 shadow-lg"
-            >
-              <div className="flex items-start gap-3 mb-3">
-                <AlertCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
-                <h4 className="font-bold text-slate-900">Important Notice</h4>
-              </div>
-              <p className="text-sm text-slate-700 leading-relaxed">
-                Corporate self-inquiry reports will only be issued to the director of the applicant company. 
-                Reports will not be issued to proxies. Bring original documents for verification. 
-                False identity claims will be reported to security agencies.
-              </p>
-            </motion.div>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* MAIN FORM SECTION */}
-      <section className="py-24">
-        <div className="container mx-auto px-6">
-          <div className="max-w-5xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-              className="bg-white rounded-[3rem] shadow-2xl border border-slate-100 overflow-hidden"
-            >
-              {/* Form Header */}
-              <div className="bg-gradient-to-br from-slate-900 to-blue-900 p-10 text-white relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/20 rounded-full blur-3xl" />
-                <div className="relative z-10">
-                  <h2 className="text-3xl font-bold mb-2">Corporate Self Inquiry Request</h2>
-                  <p className="text-blue-100">Please provide accurate information for faster processing</p>
-                </div>
+        {/* Form Section – matched sizing, padding, inputs */}
+        <section id="form" className="py-16 bg-muted">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <div className="text-center mb-10">
+                <span className="section-label">Self Inquiry Request</span>
+                <h2 className="section-title-dark mb-4">Submit Your Request</h2>
+                <p className="text-base text-muted-foreground max-w-2xl mx-auto">
+                  Provide accurate details below. All submissions are secure and compliant.
+                </p>
               </div>
 
-              {/* Success Message */}
               {isSubmitted && (
-                <motion.div
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="m-8 p-6 bg-emerald-500 text-white rounded-2xl flex items-center gap-4"
-                >
-                  <CheckCircle2 className="w-8 h-8 flex-shrink-0" />
+                <div className="mb-10 p-6 bg-secondary/10 border border-secondary/30 rounded-2xl flex items-start gap-5">
+                  <CheckCircle2 className="w-8 h-8 text-secondary flex-shrink-0 mt-1" />
                   <div>
-                    <p className="font-bold text-lg">Application Submitted Successfully!</p>
-                    <p className="text-sm text-emerald-50">Reference: #SI-{Math.floor(Math.random() * 100000)}</p>
-                    <p className="text-sm text-emerald-50 mt-1">Please call to book your collection appointment.</p>
+                    <h4 className="font-bold text-lg text-foreground mb-2">Request Submitted Successfully</h4>
+                    <p className="text-sm text-muted-foreground">
+                      Reference: #SI-{Math.floor(Math.random() * 1000000).toString().padStart(6, "0")}<br />
+                      Call 0800 280 180 to book collection appointment.
+                    </p>
                   </div>
-                </motion.div>
+                </div>
               )}
 
-              {/* Form Body */}
-              <div className="p-10">
-                <form onSubmit={handleSubmit} className="space-y-8">
-                  {/* Personal Information */}
-                  <div>
-                    <h3 className="text-lg font-bold text-slate-900 mb-6 flex items-center gap-2">
-                      <User className="w-5 h-5 text-blue-600" />
-                      Personal Information
-                    </h3>
-                    <div className="grid md:grid-cols-2 gap-6">
-                      <div className="space-y-2">
-                        <label className="text-xs font-bold uppercase tracking-wider text-slate-500">
-                          First Name <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          type="text"
-                          name="firstName"
-                          value={formData.firstName}
-                          onChange={handleChange}
-                          className="w-full bg-slate-50 border-2 border-slate-200 rounded-xl py-3 px-4 focus:outline-none focus:border-blue-500 focus:bg-white transition-all"
-                          required
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <label className="text-xs font-bold uppercase tracking-wider text-slate-500">
-                          Last Name <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          type="text"
-                          name="lastName"
-                          value={formData.lastName}
-                          onChange={handleChange}
-                          className="w-full bg-slate-50 border-2 border-slate-200 rounded-xl py-3 px-4 focus:outline-none focus:border-blue-500 focus:bg-white transition-all"
-                          required
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <label className="text-xs font-bold uppercase tracking-wider text-slate-500">
-                          Date of Birth <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          type="date"
-                          name="dateOfBirth"
-                          value={formData.dateOfBirth}
-                          onChange={handleChange}
-                          className="w-full bg-slate-50 border-2 border-slate-200 rounded-xl py-3 px-4 focus:outline-none focus:border-blue-500 focus:bg-white transition-all"
-                          required
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <label className="text-xs font-bold uppercase tracking-wider text-slate-500">
-                          Email <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          type="email"
-                          name="email"
-                          value={formData.email}
-                          onChange={handleChange}
-                          className="w-full bg-slate-50 border-2 border-slate-200 rounded-xl py-3 px-4 focus:outline-none focus:border-blue-500 focus:bg-white transition-all"
-                          required
-                        />
-                      </div>
+              <form onSubmit={handleSubmit} className="space-y-10 bg-background rounded-2xl shadow-xl p-8 md:p-10 border border-muted">
+                {/* Personal Details */}
+                <div>
+                  <h3 className="text-lg font-heading font-bold mb-5 flex items-center gap-3">
+                    <User className="w-5 h-5 text-secondary" /> Personal Details
+                  </h3>
+                  <div className="grid md:grid-cols-2 gap-5">
+                    <div>
+                      <label className="block text-sm font-semibold text-foreground mb-2">
+                        First Name <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        name="firstName"
+                        value={formData.firstName}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-4 py-3 rounded-xl border border-muted focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all bg-background"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-foreground mb-2">
+                        Last Name <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        name="lastName"
+                        value={formData.lastName}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-4 py-3 rounded-xl border border-muted focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all bg-background"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-foreground mb-2">
+                        Date of Birth <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="date"
+                        name="dateOfBirth"
+                        value={formData.dateOfBirth}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-4 py-3 rounded-xl border border-muted focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all bg-background"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-foreground mb-2">
+                        Email Address <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-4 py-3 rounded-xl border border-muted focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all bg-background"
+                      />
                     </div>
                   </div>
+                </div>
 
-                  {/* Address Information */}
-                  <div>
-                    <h3 className="text-lg font-bold text-slate-900 mb-6 flex items-center gap-2">
-                      <MapPin className="w-5 h-5 text-emerald-600" />
-                      Address Information
-                    </h3>
-                    <div className="grid md:grid-cols-2 gap-6">
-                      <div className="space-y-2 md:col-span-2">
-                        <label className="text-xs font-bold uppercase tracking-wider text-slate-500">
-                          Full Residential Address (not P.O. B.O.X)
-                        </label>
-                        <input
-                          type="text"
-                          name="address"
-                          value={formData.address}
-                          onChange={handleChange}
-                          className="w-full bg-slate-50 border-2 border-slate-200 rounded-xl py-3 px-4 focus:outline-none focus:border-emerald-500 focus:bg-white transition-all"
-                          required
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <label className="text-xs font-bold uppercase tracking-wider text-slate-500">City</label>
+                {/* Address */}
+                <div>
+                  <h3 className="text-lg font-heading font-bold mb-5 flex items-center gap-3">
+                    <MapPin className="w-5 h-5 text-secondary" /> Residential Address
+                  </h3>
+                  <div className="space-y-5">
+                    <div>
+                      <label className="block text-sm font-semibold text-foreground mb-2">
+                        Full Address (No P.O. Box) <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        name="address"
+                        value={formData.address}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-4 py-3 rounded-xl border border-muted focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all bg-background"
+                      />
+                    </div>
+                    <div className="grid md:grid-cols-3 gap-5">
+                      <div>
+                        <label className="block text-sm font-semibold text-foreground mb-2">City</label>
                         <input
                           type="text"
                           name="city"
                           value={formData.city}
                           onChange={handleChange}
-                          className="w-full bg-slate-50 border-2 border-slate-200 rounded-xl py-3 px-4 focus:outline-none focus:border-emerald-500 focus:bg-white transition-all"
-                          required
+                          className="w-full px-4 py-3 rounded-xl border border-muted focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all bg-background"
                         />
                       </div>
-                      <div className="space-y-2">
-                        <label className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                      <div className="md:col-span-2">
+                        <label className="block text-sm font-semibold text-foreground mb-2">
                           Country <span className="text-red-500">*</span>
                         </label>
                         <input
@@ -433,153 +292,156 @@ const SelfInquiry = () => {
                           name="country"
                           value={formData.country}
                           onChange={handleChange}
-                          className="w-full bg-slate-50 border-2 border-slate-200 rounded-xl py-3 px-4 focus:outline-none focus:border-emerald-500 focus:bg-white transition-all"
                           required
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <label className="text-xs font-bold uppercase tracking-wider text-slate-500">
-                          Phone Number <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          type="tel"
-                          name="phone"
-                          value={formData.phone}
-                          onChange={handleChange}
-                          className="w-full bg-slate-50 border-2 border-slate-200 rounded-xl py-3 px-4 focus:outline-none focus:border-emerald-500 focus:bg-white transition-all"
-                          required
+                          className="w-full px-4 py-3 rounded-xl border border-muted focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all bg-background"
                         />
                       </div>
                     </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-foreground mb-2">
+                        Phone Number <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="tel"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-4 py-3 rounded-xl border border-muted focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all bg-background"
+                      />
+                    </div>
                   </div>
+                </div>
 
-                  {/* ID Information */}
-                  <div>
-                    <h3 className="text-lg font-bold text-slate-900 mb-6 flex items-center gap-2">
-                      <CreditCard className="w-5 h-5 text-blue-600" />
-                      Identification
-                    </h3>
-                    <div className="grid md:grid-cols-2 gap-6">
-                      <div className="space-y-2">
-                        <label className="text-xs font-bold uppercase tracking-wider text-slate-500">
-                          Type of ID <span className="text-red-500">*</span>
+                {/* Identification */}
+                <div>
+                  <h3 className="text-lg font-heading font-bold mb-5 flex items-center gap-3">
+                    <CreditCard className="w-5 h-5 text-secondary" /> Identification
+                  </h3>
+                  <div className="space-y-5">
+                    <div className="grid md:grid-cols-2 gap-5">
+                      <div>
+                        <label className="block text-sm font-semibold text-foreground mb-2">
+                          ID Type <span className="text-red-500">*</span>
                         </label>
                         <select
                           name="idType"
                           value={formData.idType}
                           onChange={handleChange}
-                          className="w-full bg-slate-50 border-2 border-slate-200 rounded-xl py-3 px-4 focus:outline-none focus:border-blue-500 appearance-none cursor-pointer transition-all"
                           required
+                          className="w-full px-4 py-3 rounded-xl border border-muted focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all bg-background appearance-none cursor-pointer"
                         >
-                          <option value="">Select Type of ID</option>
+                          <option value="">Select ID Type</option>
                           <option value="national-id">National ID</option>
                           <option value="passport">Passport</option>
                           <option value="drivers-license">Driver's License</option>
                           <option value="financial-card">Financial Card</option>
                         </select>
                       </div>
-                      <div className="space-y-2">
-                        <label className="text-xs font-bold uppercase tracking-wider text-slate-500">
-                          ID Number (as shown on ID) <span className="text-red-500">*</span>
+                      <div>
+                        <label className="block text-sm font-semibold text-foreground mb-2">
+                          ID Number <span className="text-red-500">*</span>
                         </label>
                         <input
                           type="text"
                           name="idNumber"
                           value={formData.idNumber}
                           onChange={handleChange}
-                          className="w-full bg-slate-50 border-2 border-slate-200 rounded-xl py-3 px-4 focus:outline-none focus:border-blue-500 focus:bg-white transition-all"
                           required
+                          className="w-full px-4 py-3 rounded-xl border border-muted focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all bg-background"
                         />
                       </div>
-                      <div className="space-y-2 md:col-span-2">
-                        <label className="text-xs font-bold uppercase tracking-wider text-slate-500 block mb-2">
-                          Upload Copy of Valid ID
-                        </label>
-                        <div className="relative">
-                          <input
-                            type="file"
-                            onChange={handleFileChange}
-                            accept=".pdf,.jpg,.jpeg,.png"
-                            className="hidden"
-                            id="id-upload"
-                          />
-                          <label
-                            htmlFor="id-upload"
-                            className="flex items-center justify-center gap-3 w-full bg-slate-50 border-2 border-dashed border-slate-300 rounded-xl py-8 px-4 cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition-all group"
-                          >
-                            <Upload className="w-6 h-6 text-slate-400 group-hover:text-blue-600 transition-colors" />
-                            <div className="text-center">
-                              <p className="text-slate-700 font-semibold group-hover:text-blue-900">
-                                {formData.idFile ? formData.idFile.name : "Click to upload or drag and drop"}
-                              </p>
-                              <p className="text-xs text-slate-500 mt-1">PDF, JPG, PNG up to 1 file</p>
-                            </div>
-                          </label>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-semibold text-foreground mb-3">
+                        Upload Copy of Valid ID
+                      </label>
+                      <label
+                        htmlFor="id-upload"
+                        className="flex flex-col items-center justify-center gap-3 border-2 border-dashed border-muted rounded-xl py-8 px-5 cursor-pointer hover:border-secondary hover:bg-secondary/5 transition-all group"
+                      >
+                        <div className="p-3 bg-secondary/10 rounded-full group-hover:bg-secondary/20 transition-all">
+                          <Upload className="w-7 h-7 text-secondary group-hover:text-secondary-foreground transition-colors" />
                         </div>
-                      </div>
+                        <div className="text-center">
+                          <p className="text-foreground font-semibold group-hover:text-secondary text-sm">
+                            {formData.idFile ? formData.idFile.name : "Upload Evidence / Supporting Letters"}
+                          </p>
+                          <p className="text-xs text-muted-foreground mt-1">
+                            PDF, JPG, PNG • Max 5MB
+                          </p>
+                        </div>
+                        <input
+                          id="id-upload"
+                          type="file"
+                          accept=".pdf,.jpg,.jpeg,.png"
+                          onChange={handleFileChange}
+                          className="hidden"
+                        />
+                      </label>
                     </div>
                   </div>
+                </div>
 
-                  {/* Submit Button */}
-                  <div className="pt-6">
-                    <button
-                      type="submit"
-                      className="w-full bg-gradient-to-r from-blue-900 to-blue-800 hover:from-emerald-600 hover:to-emerald-500 text-white font-bold py-5 rounded-2xl transition-all duration-500 shadow-xl shadow-blue-900/20 hover:shadow-emerald-500/20 active:scale-[0.98] flex items-center justify-center gap-3 group"
-                    >
-                      <span className="text-lg">Submit Application</span>
-                      <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </motion.div>
+                {/* Submit */}
+                <div className="pt-6">
+                  <button
+                    type="submit"
+                    className="w-full bg-secondary text-primary-foreground font-bold py-4 rounded-xl hover:bg-secondary/90 transition-all flex items-center justify-center gap-3 text-base group shadow-md"
+                  >
+                    Submit Your Request
+                    <Send className="w-5 h-5 group-hover:rotate-12 transition-transform" />
+                  </button>
+                </div>
+              </form>
 
-            {/* Security Notice */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              viewport={{ once: true }}
-              className="mt-8 flex items-start gap-4 bg-slate-900 text-white rounded-2xl p-6"
-            >
-              <Shield className="w-6 h-6 text-emerald-400 flex-shrink-0 mt-1" />
-              <div>
-                <h4 className="font-bold mb-2">Your Data is Secure</h4>
-                <p className="text-sm text-slate-300 leading-relaxed">
-                  All information submitted is encrypted and handled in compliance with Uganda's Data Protection 
-                  and Privacy Act. We are regulated by the Bank of Uganda and maintain ISO 27001 certification.
+              <div className="mt-10 flex items-center justify-center gap-4 text-muted-foreground text-center text-sm">
+                <Shield className="w-5 h-5 text-secondary flex-shrink-0" />
+                <p>
+                  All requests are handled confidentially and in full compliance with Bank of Uganda guidelines and Uganda's Data Protection Act.
                 </p>
               </div>
-            </motion.div>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
+        {/* Bottom CTA – matched to DisputeResolution */}
+        <section
+          className="relative py-16 bg-cover bg-center bg-no-repeat text-foreground"
+          style={{ backgroundImage: `url(${heroImage})` }}
+        >
+          <div className="absolute inset-0 bg-white/65 md:bg-white/55" />
+
+          <div className="relative z-10 container mx-auto px-4 text-center">
+            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-5 text-gray-900">
+              Need Assistance with Your Request?
+            </h2>
+            <p className="text-lg max-w-4xl mx-auto mb-8 text-gray-800 opacity-95">
+              Our team is here to help. Contact us for guidance on submitting or tracking your inquiry.
+            </p>
+            <div className="flex flex-col sm:flex-row justify-center gap-5">
+              <a
+                href="tel:0800280180"
+                className="inline-flex items-center gap-3 px-8 py-4 bg-primary text-primary-foreground rounded-full font-semibold hover:bg-primary/90 transition-all shadow-md text-base"
+              >
+                <Phone className="w-5 h-5" />
+                Call Toll-Free: 0800 280 180
+              </a>
+              <a
+                href="#"
+                className="btn-secondary inline-flex items-center gap-3 px-8 py-4 text-base font-semibold group shadow-md"
+              >
+                Contact Support
+                <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </a>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <LiveChatWidget />
       <Footer />
-
-      {/* Animation Styles */}
-      <style>{`
-        @keyframes blob {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          33% { transform: translate(30px, -50px) scale(1.1); }
-          66% { transform: translate(-20px, 20px) scale(0.9); }
-        }
-        .animation-delay-2000 {
-          animation-delay: 2s;
-        }
-        
-        /* Marquee Animation */
-        @keyframes marquee {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-100%); }
-        }
-        .animate-marquee {
-          animation: marquee 40s linear infinite;
-        }
-        .marquee-container {
-          display: flex;
-        }
-      `}</style>
     </div>
   );
 };

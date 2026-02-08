@@ -1,384 +1,217 @@
 import React from "react";
+import { ArrowRight, CheckCircle, Globe, Zap, Lock, Users } from "lucide-react";
+import heroImage from "@/assets/FinanaceTeam1.jpg"; // team or data visualization
+import teamImage from "@/assets/FinanceAnyalysing.jpg"; // professional team photo
+import LiveChatWidget from "@/components/LiveChat";
 import TopBar from "@/components/TopBar";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { motion } from "framer-motion";
-import { 
-  Database, Users, TrendingUp, 
-  FileText, Settings, Target, Lightbulb,
-  CheckCircle, Mail, ChevronRight
-} from "lucide-react";
+
+
+
+// Replace these with your actual logo paths (optimized PNG/SVG, ideally 120-180px wide)
+import logo1 from "@/assets/armada-logo.png";
+import logo2 from "@/assets/armada-logo.png";
+import logo3 from "@/assets/armada-logo.png";
+import logo4 from "@/assets/armada-logo.png";
+import logo5 from "@/assets/armada-logo.png";
+import logo6 from "@/assets/armada-logo.png";
+
+
+const partners = [
+  { name: "Company A", logo: logo1 },
+  { name: "Company B", logo: logo2 },
+  { name: "Company C", logo: logo3 },
+  { name: "Company D", logo: logo4 },
+  { name: "Company E", logo: logo5 },
+  { name: "Company F", logo: logo6 },
+  // duplicate first few for seamless infinite scroll
+  { name: "Company A", logo: logo1 },
+  { name: "Company B", logo: logo2 },
+];
+
+const whyPartner = [
+  {
+    icon: Globe,
+    title: "Global Insight, Local Impact",
+    description: "We blend international expertise with deep regional knowledge to deliver precise, actionable, and context-aware insights.",
+    accent: "#14B1E7",
+  },
+  {
+    icon: Zap,
+    title: "Real-Time Intelligence",
+    description: "By leveraging live, up-to-the-minute data, we empower you to make decisions that are timely, confident, and fully informed.",
+    accent: "#91CD95",
+  },
+  {
+    icon: Lock,
+    title: "Uncompromising Security",
+    description: "We apply industry-leading encryption and rigorous compliance protocols to ensure your data remains secure, private, and fully protected.",
+    accent: "#0066AB",
+  },
+  {
+    icon: Users,
+    title: "Our Team’s Expertise",
+    description: "You will benefit from the collective skills of our seasoned professionals in credit, risk, and data management, delivering insights that are reliable, actionable, and tailored to your specific needs.",
+    accent: "#14B1E7",
+  },
+];
 
 const AboutPage = () => {
-  const features = [
-    {
-      icon: <Database className="w-8 h-8" />,
-      title: "Faster Data Processing",
-      gradient: "from-blue-500 to-blue-700"
-    },
-    {
-      icon: <Users className="w-8 h-8" />,
-      title: "Automated Service Delivery",
-      gradient: "from-emerald-500 to-emerald-700"
-    },
-    {
-      icon: <TrendingUp className="w-8 h-8" />,
-      title: "Best Insights From Data",
-      gradient: "from-blue-600 to-emerald-600"
-    }
-  ];
-
-
-  // Background images for marquee
-  const backgroundImages = [
-    "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&h=300&fit=crop",
-    "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop",
-    "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop",
-    "https://images.unsplash.com/photo-1543286386-713bdd548da4?w=400&h=300&fit=crop",
-    "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=400&h=300&fit=crop",
-    "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&h=300&fit=crop",
-  ];
-
-  const services = [
-    {
-      icon: <FileText className="w-10 h-10" />,
-      title: "Credit Information and Risk Reporting",
-      gradient: "from-blue-500 to-blue-600"
-    },
-    {
-      icon: <Settings className="w-10 h-10" />,
-      title: "Data Science and Decision Analytics",
-      gradient: "from-emerald-500 to-emerald-600"
-    },
-    {
-      icon: <Target className="w-10 h-10" />,
-      title: "Portfolio Management Solutions",
-      gradient: "from-blue-600 to-emerald-600"
-    },
-    {
-      icon: <Lightbulb className="w-10 h-10" />,
-      title: "Data Management",
-      gradient: "from-emerald-600 to-blue-600"
-    }
-  ];
-
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background flex flex-col">
       <TopBar />
       <Header />
-       {/* HERO SECTION */}
-            <section className="relative pt-32 pb-20 overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
-              {/* Animated Background Marquee */}
-              <div className="absolute inset-0 opacity-5 overflow-hidden">
-                <div className="marquee-container flex gap-8">
-                  <div className="marquee-content flex gap-8 animate-marquee">
-                    {backgroundImages.map((img, i) => (
-                      <div key={i} className="flex-shrink-0 w-80 h-60 rounded-2xl overflow-hidden">
-                        <img src={img} alt="" className="w-full h-full object-cover" />
-                      </div>
-                    ))}
-                  </div>
-                  <div className="marquee-content flex gap-8 animate-marquee" aria-hidden="true">
-                    {backgroundImages.map((img, i) => (
-                      <div key={i} className="flex-shrink-0 w-80 h-60 rounded-2xl overflow-hidden">
-                        <img src={img} alt="" className="w-full h-full object-cover" />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-      
-              {/* Animated Background Pattern */}
-              <div className="absolute inset-0 opacity-10">
-                <div className="absolute top-20 left-20 w-72 h-72 bg-emerald-500 rounded-full blur-[120px] animate-pulse" />
-                <div className="absolute bottom-20 right-20 w-96 h-96 bg-blue-500 rounded-full blur-[120px] animate-pulse animation-delay-2000" />
-              </div>
-      
-              <div className="container mx-auto px-6 relative z-10">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6 }}
-                  className="text-center"
-                >
-                  {/* Breadcrumb */}
-                  <div className="flex items-center justify-center gap-2 text-sm text-emerald-300 mb-8">
-                    <span className="hover:text-white transition-colors cursor-pointer">Home</span>
-                    <ChevronRight className="w-4 h-4" />
-                    <span className="text-white font-semibold">About us</span>
-                  </div>
-      
-                  <h1 className="text-5xl md:text-7xl font-black text-white mb-6 leading-tight">
-                    About Armada
-                  </h1>
-                 {} <p className="text-xl text-blue-100 max-w-2xl mx-auto leading-relaxed">
-                   
-                  </p>
-                </motion.div>
-              </div>
-      
-              {/* Bottom Wave - Blue wave with green fill */}
-              <div className="absolute bottom-0 left-0 right-0">
-                <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
-                  {/* Green bottom fill */}
-                 { <path d="M0 0L60 10C120 20 240 40 360 46.7C480 53 600 47 720 43.3C840 40 960 40 1080 46.7C1200 53 1320 67 1380 73.3L1440 80V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0V0Z" fill="#ffffff"/>}
-                  
-                </svg>
-              </div>
-            </section>
-      {/* TOP SECTION - Setting The New Standard */}
-      <section className="relative py-24 bg-gradient-to-br from-slate-50 via-blue-50/40 to-emerald-50/40 overflow-hidden">
-        {/* Background decoration */}
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-br from-blue-500/5 to-emerald-500/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-emerald-500/5 to-blue-500/5 rounded-full blur-3xl" />
-        
-        <div className="container mx-auto px-6 max-w-7xl relative z-10">
-          {/* About us label */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="flex items-center justify-center gap-4 mb-6"
-          >
-            <div className="h-px w-12 bg-slate-400" />
-            <span className="text-sm font-bold uppercase tracking-[0.2em] text-slate-600">About us</span>
-            <div className="h-px w-12 bg-slate-400" />
-          </motion.div>
 
-          {/* Main heading */}
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-5xl md:text-6xl font-black text-center mb-20 leading-tight"
-          >
-            <span className="bg-gradient-to-r from-emerald-500 via-emerald-600 to-teal-600 bg-clip-text text-transparent">
-              We're Setting The New<br />Standard.
-            </span>
-          </motion.h1>
+      <main className="flex-grow">
+        {/* Hero Section - unchanged */}
+        <section className="relative h-[500px] md:h-[600px] overflow-hidden">
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: `url(${heroImage})` }}
+          />
+          <div className="absolute inset-0 bg-primary/70" />
 
-          {/* Feature Cards */}
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {features.map((feature, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
-                className="group relative"
+          <div className="relative z-10 container mx-auto px-6 md:px-28 h-full flex items-center">
+            <div className="max-w-4xl">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-primary-foreground mb-6">
+                About Armada Credit Bureau
+              </h1>
+              <p className="text-xl text-primary-foreground/90 mb-8 max-w-3xl">
+                At Armada Credit Bureau, we believe that reliable data is the heartbeat of a thriving economy. As global leaders in credit information reporting and advanced analytics, we provide the clarity needed to navigate the complexities of today’s financial landscape. We transform raw data into actionable intelligence that fosters trust between lenders and borrowers.
+              </p>
+              <a
+                href="#why-partner"
+                className="btn-secondary inline-flex items-center gap-3 px-8 py-4 text-lg group"
               >
-                {/* Card */}
-                <div className="relative bg-white rounded-2xl p-8 text-center shadow-lg border border-slate-200 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
-                  {/* Icon with gradient background */}
-                  <div className="relative inline-block mb-6">
-                    <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} rounded-2xl blur-xl opacity-30 group-hover:opacity-50 transition-opacity`} />
-                    <div className={`relative bg-gradient-to-br ${feature.gradient} text-white p-5 rounded-2xl shadow-xl`}>
-                      {feature.icon}
-                    </div>
-                  </div>
-                  
-                  {/* Title */}
-                  <h3 className="text-xl font-black text-slate-800 leading-tight">
-                    {feature.title}
-                  </h3>
-                </div>
-              </motion.div>
-            ))}
+                Why Partner With Us
+                <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+              </a>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* QUOTE SECTION - Roger Tchoufa */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-6 max-w-7xl">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            
-            {/* Left - Quote */}
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="relative"
-            >
-              {/* Large quotation mark decoration */}
-              <div className="absolute -top-8 -left-4 text-[120px] font-serif text-blue-100 leading-none select-none">"</div>
-              
-              <div className="relative bg-gradient-to-br from-slate-50 to-blue-50/50 rounded-3xl p-10 border border-blue-100 shadow-lg">
-                <p className="text-lg text-slate-700 leading-relaxed mb-8 relative z-10">
-                  "At Armada, we understand the power of data and are here to help you harness that power to your advantage. That is why we combine the power of data science and analytics with service automation to deliver value-creating insights that enable businesses and individuals to make intelligent decisions. In developing our solution, we have applied over four decades of combined experience in credit bureau operations, commercial and retail banking, and technology services to create your most reliable single source of actionable insights. We believe it is a new era for credit information reporting in Uganda."
-                </p>
-                
-                {/* Author */}
-                <div className="relative z-10">
-                  <div className="h-1 w-20 bg-gradient-to-r from-blue-600 to-emerald-600 rounded-full mb-4" />
-                  <p className="font-black text-xl text-slate-900">Roger Tchoufa</p>
-                  <p className="text-sm font-bold text-slate-500 uppercase tracking-wider">President</p>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Right - Image */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="relative"
-            >
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl">
-                {/* Gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-blue-900/20 to-transparent z-10" />
-                
-                <img 
-                  src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800" 
-                  alt="Data Analytics"
+        {/* Excellence & Inclusion Section - unchanged */}
+        <section className="py-20 bg-muted">
+          <div className="container mx-auto px-4">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl order-2 lg:order-1">
+                <img
+                  src={teamImage}
+                  alt="Armada team analyzing data"
                   className="w-full h-[500px] object-cover"
                 />
-
-                {/* Floating badge */}
-                <div className="absolute top-6 right-6 bg-white/95 backdrop-blur-sm rounded-2xl px-6 py-4 shadow-xl z-20 border border-blue-100">
-                  <div className="flex items-center gap-3">
-                    <CheckCircle className="w-6 h-6 text-emerald-600" />
-                    <div>
-                      <p className="text-xs font-bold uppercase text-slate-600">Trusted By</p>
-                      <p className="text-lg font-black text-slate-900">1000+ Clients</p>
-                    </div>
-                  </div>
-                </div>
+                <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-secondary/20 rounded-2xl -z-10" />
               </div>
-            </motion.div>
 
+              <div className="order-1 lg:order-2">
+                <span className="section-label">Our Commitment</span>
+                <h2 className="section-title-dark mb-6">
+                  Excellence in Analytics, Integrity in Reporting
+                </h2>
+                <p className="text-lg text-muted-foreground mb-6">
+                  In an era where speed and accuracy are paramount, Armada stands at the forefront of innovation. We leverage cutting-edge technology and robust data modeling to deliver comprehensive credit reports that go beyond just numbers. Our analytics provide a deep-dive into financial behaviors, allowing institutions to mitigate risk effectively while identifying new opportunities for sustainable growth.
+                </p>
+                <p className="text-lg text-muted-foreground mb-8">
+                  A Catalyst for Financial Inclusion: We don't just report data; we empower futures. For individuals, Armada serves as a gateway to financial opportunity. By maintaining the highest standards of data integrity, we ensure that every credit story is told fairly and accurately, helping consumers unlock access to the capital they need to build their dreams.
+                </p>
+               
+              </div>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* DARK CTA SECTION - We bring you service */}
-      <section className="relative py-28 overflow-hidden">
-        {/* Background image with overlay */}
-        <div className="absolute inset-0 z-0">
-          <img 
-            src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=2000"
-            alt="Technology background"
-            className="w-full h-full object-cover"
-          />
-          {/* Dark overlay with blue/green gradient */}
-          <div className="absolute inset-0 bg-gradient-to-br from-slate-900/95 via-blue-900/95 to-slate-900/95" />
-          
-          {/* Animated gradient orbs */}
-          <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-blue-600/20 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-emerald-600/20 rounded-full blur-3xl animate-pulse" />
-        </div>
-
-        <div className="container mx-auto px-6 max-w-6xl relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-5xl md:text-6xl font-black text-white mb-6 leading-tight">
-              We bring you service
-            </h2>
-            <p className="text-xl text-blue-100 max-w-4xl mx-auto leading-relaxed">
-              and product automation, advanced analytics, and multi-channel accessibility so that wherever you are and in whatever capacity you serve, you get the best value from partnering with us as your preferred credit reference bureau.
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex justify-center"
-          >
-            <button className="group relative px-10 py-5 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-teal-600 text-white font-black text-lg rounded-2xl shadow-2xl shadow-emerald-900/50 hover:shadow-emerald-500/50 transition-all duration-500 hover:-translate-y-1 overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
-              <span className="relative z-10 flex items-center gap-3">
-                <Mail className="w-5 h-5" />
-                Contact us
-              </span>
-            </button>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* OUR SYSTEM SECTION - Riding on the strength */}
-      <section className="py-24 bg-gradient-to-br from-slate-50 via-blue-50/30 to-emerald-50/30">
-        <div className="container mx-auto px-6 max-w-7xl">
-          
-          <div className="grid lg:grid-cols-2 gap-16 items-start mb-20">
-            {/* Left - Section label and heading */}
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <div className="flex items-center gap-4 mb-6">
-                <div className="h-px w-12 bg-slate-400" />
-                <span className="text-sm font-bold uppercase tracking-[0.2em] text-slate-600">Our System</span>
-              </div>
-              
-              <h2 className="text-5xl md:text-6xl font-black leading-tight mb-6">
-                <span className="bg-gradient-to-r from-emerald-500 via-emerald-600 to-teal-600 bg-clip-text text-transparent">
-                  Riding on the strength of our robust credit reporting and analytics platform
-                </span>
-              </h2>
-            </motion.div>
-
-            {/* Right - Description */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="lg:pt-20"
-            >
-              <p className="text-lg text-slate-700 leading-relaxed">
-                We offer an advanced suite of products that equip our subscribers with the tools they need to enhance the performance of their credit portfolio and prevent default-related losses. Thereby, helping them to get ahead and stay ahead
+        {/* Why Partner With Us - unchanged */}
+        <section id="why-partner" className="py-20 bg-background">
+          <div className="container mx-auto px-4">
+            <div className="text-center max-w-3xl mx-auto mb-16">
+              <span className="section-label">Why Choose Armada</span>
+              <h2 className="section-title-dark mb-6">Why Partner with Armada?</h2>
+              <p className="text-lg text-muted-foreground">
+                Whether you are a financial institution seeking to optimize your risk management or an individual looking to understand your credit standing, Armada Credit Bureau is your most trusted ally in the journey toward financial clarity.
               </p>
-            </motion.div>
-          </div>
+            </div>
 
-          {/* Service Cards Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {services.map((service, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="group relative"
-              >
-                {/* Card */}
-                <div className="relative bg-white rounded-2xl p-8 text-center h-full shadow-lg border border-slate-200 hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 overflow-hidden">
-                  {/* Hover gradient overlay */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
-                  
-                  {/* Icon */}
-                  <div className="relative mb-6 inline-block">
-                    <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} rounded-2xl blur-xl opacity-0 group-hover:opacity-40 transition-opacity`} />
-                    <div className="relative bg-slate-50 group-hover:bg-white p-6 rounded-2xl border border-slate-200 group-hover:border-transparent transition-all">
-                      <div className={`text-slate-700 group-hover:bg-gradient-to-br group-hover:${service.gradient} group-hover:bg-clip-text group-hover:text-transparent transition-all`}>
-                        {service.icon}
-                      </div>
-                    </div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {whyPartner.map((item, index) => (
+                <div
+                  key={item.title}
+                  className="value-card group text-center"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <div
+                    className="w-20 h-20 rounded-2xl bg-secondary/10 flex items-center justify-center mx-auto mb-6 group-hover:bg-secondary transition-colors duration-300"
+                  >
+                    <item.icon className="w-10 h-10 text-secondary group-hover:text-secondary-foreground transition-colors" />
                   </div>
-                  
-                  {/* Title */}
-                  <h3 className="text-lg font-black text-slate-800 leading-tight relative z-10">
-                    {service.title}
+                  <h3 className="text-xl font-heading font-bold text-foreground mb-3 group-hover:text-secondary transition-colors">
+                    {item.title}
                   </h3>
+                  <p className="text-muted-foreground">{item.description}</p>
                 </div>
-              </motion.div>
-            ))}
+              ))}
+            </div>
           </div>
+        </section>
 
+
+{/*Worked with companies*/}
+{/* Trusted by Leading Institutions – Fixed seamless marquee */}
+<section className="py-16 md:py-20 bg-white overflow-hidden">
+  <div className="container mx-auto px-5 md:px-8">
+    <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-10">
+      Trusted by Leading Institutions
+    </h2>
+
+    <div className="relative">
+      {/* Optional subtle edge fade – looks more professional */}
+      <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-16 md:w-32 bg-gradient-to-r from-white to-transparent" />
+      <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-16 md:w-32 bg-gradient-to-l from-white to-transparent" />
+
+      <div className="overflow-hidden">
+        <div
+          className="flex animate-marquee whitespace-nowrap will-change-transform"
+          style={{ animationDuration: '35s' }} // adjust speed: 20s = fast, 40s = slow
+        >
+          {/* Show logos TWICE for seamless loop */}
+          {[...partners, ...partners].map((partner, index) => (
+            <div
+              key={index}
+              className="flex-shrink-0 mx-6 md:mx-12 lg:mx-16"
+            >
+              <img
+                src={partner.logo}
+                alt={`${partner.name} logo`}
+                className="h-12 md:h-16 lg:h-20 w-auto object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+              />
+            </div>
+          ))}
         </div>
-      </section>
+      </div>
+    </div>
+  </div>
+</section>
+        {/* Closing CTA - now with hero-style background image, NO full overlay */}
+        <section
+          className="relative py-20 bg-cover bg-center bg-no-repeat text-foreground"
+          style={{ backgroundImage: `url(${heroImage})` }}
+        >
+          {/* Subtle light backdrop only behind content area (helps text readability) */}
+          <div className="absolute inset-0 bg-white/65 md:bg-white/55" />
+
+          <div className="relative z-10 container mx-auto px-4 md:px-8 text-center">
+            <h2 className="text-4xl md:text-5xl font-heading font-bold mb-8 text-gray-900">
+              Your Trusted Partner in Financial Clarity
+            </h2>
+            <p className="text-xl max-w-4xl mx-auto mb-12 text-gray-800 opacity-95">
+              Join institutions and individuals across Uganda and beyond who rely on Armada for reliable, secure, and insightful credit information.
+            </p>
+           
+          </div>
+        </section>
+      </main>
+
+      <LiveChatWidget />
       <Footer />
     </div>
   );
