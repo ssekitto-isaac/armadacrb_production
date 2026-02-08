@@ -3,34 +3,26 @@ import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
 
 // Background images
-import hero1 from "@/assets/welcome4.png";
+import hero1 from "@/assets/young-team.png";
 import hero2 from "@/assets/credit-report-fine.png";
 import hero3 from "@/assets/analytics_african_men.png";
 import hero4 from "@/assets/women_standing_final2.png";
 import hero5 from "@/assets/risk_int.png";
 import hero6 from "@/assets/lady and the guy final.png";
 import hero7 from "@/assets/welcome6.png";
-import hero8 from "@/assets/young-team.png";
 
-// Armada Logo
-import armadaLogo from "@/assets/armada-logo-whitewords.png";
+// Separate clean logo (only used on welcome slide)
+import armadaLogo from "@/assets/armada-logo-whitewords.png"; // ← confirm this path is correct
 
-// Slide data
 const slides = [
   {
-    title: "",
+    title: "", // Special handling for logo + gradient text
     subtitle: "We are global leaders in credit reporting and analytics",
     cta: "View Now",
     link: "#",
-    image: hero8,
+    image: hero1
   },
-  {
-    title: "Welcome To ArmadaCRB",
-    subtitle: "We are global leaders in credit reporting and analytics",
-    cta: "View Now",
-    link: "#",
-    image: hero1,
-  },
+  
   {
     title: "ArmadaScore®",
     subtitle:
@@ -73,49 +65,6 @@ const slides = [
   },
 ];
 
-// =======================
-// CheckeredLogo Component
-// =======================
-const CheckeredLogo = ({ src, gridSize = 8, tileSize = 40 }) => {
-  const center = (gridSize - 1) / 2;
-
-  return (
-    <div
-      className="relative inline-block"
-      style={{
-        width: `${gridSize * tileSize}px`,
-        height: `${gridSize * tileSize}px`,
-        display: "grid",
-        gridTemplateColumns: `repeat(${gridSize}, ${tileSize}px)`,
-        gridTemplateRows: `repeat(${gridSize}, ${tileSize}px)`,
-      }}
-    >
-      {Array.from({ length: gridSize * gridSize }).map((_, index) => {
-        const row = Math.floor(index / gridSize);
-        const col = index % gridSize;
-        const distance = Math.max(Math.abs(row - center), Math.abs(col - center));
-
-        return (
-          <motion.div
-            key={index}
-            style={{
-              backgroundImage: `url(${src})`,
-              backgroundSize: `${gridSize * tileSize}px ${gridSize * tileSize}px`,
-              backgroundPosition: `-${col * tileSize}px -${row * tileSize}px`,
-            }}
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: distance * 0.05, type: "spring", stiffness: 120 }}
-          />
-        );
-      })}
-    </div>
-  );
-};
-
-// =======================
-// HeroSection Component
-// =======================
 const HeroSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const intervalRef = useRef<number | null>(null);
@@ -178,7 +127,8 @@ const HeroSection = () => {
       <div className="relative z-10 container mx-auto px-28 py-28 h-full flex items-center">
         <div className="max-w-4xl animate-fade-in">
           {isWelcomeSlide ? (
-            <div className="space-y-6 md:space-y-8 text-center md:text-left">
+            <div className="space-y-6 md:space-y-8">
+              {/* Gradient "Welcome to" text */}
               <h2
                 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold tracking-wide bg-clip-text text-transparent"
                 style={{
@@ -188,16 +138,30 @@ const HeroSection = () => {
                 Welcome to
               </h2>
 
-              {/* Checkered Logo Animation */}
-              <div className="mx-auto md:mx-0">
-                <CheckeredLogo src={armadaLogo} gridSize={8} tileSize={40} />
-              </div>
+              {/* Smaller logo */}
+              <motion.div
+                key="welcome-logo"
+                initial={{ opacity: 0, y: 30, x: -100, scale: 0.5 }}
+                animate={{ opacity: 1, y: 0, x: 0, scale: 1.0 }}
+                transition={{ duration: 2, ease: "easeOut" }}
+                className="relative inline-block max-w-[380px] md:max-w-[420px] w-full mx-auto md:mx-0 block"
+              >
+                <img
+                  src={armadaLogo}
+                  alt="Armada Credit Bureau"
+                  className="w-full h-auto drop-shadow-2xl object-contain"
+                />
+                <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/10 to-blue-500/10 blur-3xl -z-10 rounded-3xl pointer-events-none" />
+              </motion.div>
 
-              <p className="text-xl text-primary-foreground max-w-xl mx-auto md:mx-0 mt-6">
+
+              {/* Subtitle */}
+              <p className="text-xl text-primary-foreground max-w-xl mx-auto md:mx-0 text-center md:text-left">
                 {slides[0].subtitle}
               </p>
 
-              <div className="flex items-center gap-6 justify-center md:justify-start mt-4">
+              {/* CTA */}
+              <div className="flex items-center gap-6 justify-center md:justify-start">
                 <a
                   href={slides[0].link}
                   onClick={(e) => handleCTA(e, 0)}
@@ -220,6 +184,9 @@ const HeroSection = () => {
                     {i !== arr.length - 1 && <br />}
                   </span>
                 ))}
+                {slides[currentSlide].title === "ArmadaScore®" && (
+                  <sup className="text-2xl"></sup>
+                )}
               </h1>
               <p className="text-xl text-primary-foreground mb-8 max-w-xl">
                 {slides[currentSlide].subtitle}
