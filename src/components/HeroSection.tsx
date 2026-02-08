@@ -26,7 +26,7 @@ const slides = [
   {
     title: "ArmadaScore®",
     subtitle:
-      "Our predictive score module makes it possible for creditors to access risk reports about credit applicants",
+      "Our predictive scoring module delivers a high-precision measure of credit risk, empowering lenders to anticipate borrower behavior and minimize default exposure with confidence.",
     cta: "View Now",
     link: "/armadascore",
     image: hero6,
@@ -82,7 +82,7 @@ const HeroSection = () => {
     const start = () => {
       intervalRef.current = window.setInterval(() => {
         setCurrentSlide((prev) => (prev + 1) % slides.length);
-      }, 5000);
+      }, 3000);
     };
 
     if (!isPaused) start();
@@ -128,17 +128,7 @@ const HeroSection = () => {
         <div className="max-w-4xl animate-fade-in">
           {isWelcomeSlide ? (
             <div className="space-y-6 md:space-y-8">
-              {/* Gradient "Welcome to" text */}
-              <h2
-                className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold tracking-wide bg-clip-text text-transparent"
-                style={{
-                  backgroundImage: "linear-gradient(to right, #ffffff, #ffffff)",
-                }}
-              >
-                Welcome to
-              </h2>
-
-              {/* Smaller logo */}
+              {/* Smaller logo with "Welcome to" positioned above */}
               <motion.div
                 key="welcome-logo"
                 initial={{ opacity: 0, y: 30, x: -100, scale: 0.5 }}
@@ -146,6 +136,13 @@ const HeroSection = () => {
                 transition={{ duration: 2, ease: "easeOut" }}
                 className="relative inline-block max-w-[380px] md:max-w-[420px] w-full mx-auto md:mx-0 block"
               >
+                {/* "Welcome to" text positioned above the logo */}
+                <h2
+                  className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold tracking-wide text-white mb-2 text-right"
+                >
+                  Welcome to
+                </h2>
+                
                 <img
                   src={armadaLogo}
                   alt="Armada Credit Bureau"
@@ -153,7 +150,6 @@ const HeroSection = () => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/10 to-blue-500/10 blur-3xl -z-10 rounded-3xl pointer-events-none" />
               </motion.div>
-
 
               {/* Subtitle */}
               <p className="text-xl text-primary-foreground max-w-xl mx-auto md:mx-0 text-center md:text-left">
