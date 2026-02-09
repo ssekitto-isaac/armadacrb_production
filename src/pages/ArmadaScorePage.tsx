@@ -110,10 +110,10 @@ const ArmadaScorePage = () => {
 
             {/* Prev / Next Buttons */}
             <div className="flex items-center justify-between mt-12 max-w-3xl mx-auto">
-              <Link to="/product-suites/credit-reports" className="inline-flex items-center gap-2 px-4 py-2 border rounded-md text-foreground hover:bg-gray-100">
+              <Link to="./product-suites/credit-reports" className="inline-flex items-center gap-2 px-4 py-2 border rounded-md text-foreground hover:bg-gray-100">
                 <ArrowLeft className="w-4 h-4" /> Previous
               </Link>
-              <Link to="/product-suites/analytics" className="inline-flex items-center gap-2 px-4 py-2 bg-secondary text-white rounded-md hover:opacity-90">
+              <Link to="./product-suites/analytics" className="inline-flex items-center gap-2 px-4 py-2 bg-secondary text-white rounded-md hover:opacity-90">
                 Next <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
