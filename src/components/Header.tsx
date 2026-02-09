@@ -30,7 +30,7 @@ interface NavItem {
 const navItems: NavItem[] = [
   { label: "Home", href: "/" },
   {
-    label: "AboutUs",
+    label: "About Us",
     href: "/AboutArmada",  // main About page
     subItems: [
       { label: "About Armada CRB", href: "./AboutArmada", description: "Learn about our company and values" },
