@@ -28,7 +28,7 @@ const slides = [
     subtitle:
       "Our predictive scoring module delivers a high-precision measure of credit risk, empowering lenders to anticipate borrower behavior and minimize default exposure with confidence.",
     cta: "View Now",
-    link: "/armadascore",
+    link: "./armadascore",
     image: hero6,
   },
   {
@@ -36,7 +36,7 @@ const slides = [
     subtitle:
       "Our predictive score module makes it possible for creditors to access risk reports about credit applicants",
     cta: "View Now",
-    link: "/product-suites/credit-reports",
+    link: "./product-suites/credit-reports",
     image: hero2,
   },
   {
@@ -44,7 +44,7 @@ const slides = [
     subtitle:
       "With our analytics services, you will get more insight from data while learning more about prevailing trends",
     cta: "View More",
-    link: "/analytics",
+    link: "./analytics",
     image: hero3,
   },
   {
@@ -52,7 +52,7 @@ const slides = [
     subtitle:
       "Credit education is key to building a healthy credit culture. Learn more about credit today",
     cta: "View More",
-    link: "/credit-education",
+    link: "./credit-education",
     image: hero4,
   },
   {
