@@ -31,15 +31,15 @@ const navItems: NavItem[] = [
   { label: "Home", href: "/" },
   {
     label: "About Us",
-    href: "/AboutArmada",  // main About page
+    href: "./AboutArmada",  // main About page
     subItems: [
-      { label: "About Armada CRB", href: "/AboutArmada", description: "Learn about our company and values" },
-      { label: "Our People", href: "/OurPeople", description: "Meet our leadership" },
+      { label: "About Armada CRB", href: "./AboutArmada", description: "Learn about our company and values" },
+      { label: "Our People", href: "./OurPeople", description: "Meet our leadership" },
     ],
   },
   {
     label: "Product Suites",
-    href: "/product-suites",
+    href: "./product-suites",
     subItems: [
       { label: "Credit Information & Risk Reports", href: "/product-suites/credit-reports", description: "Actionable insights for credit decisions" },
       { label: "Decision and Data Analytics", href: "/product-suites/analytics", description: "Data-driven business intelligence" },
@@ -47,18 +47,18 @@ const navItems: NavItem[] = [
       { label: "Data Management", href: "/product-suites/data-management", description: "Data is a valuable source of actionable insight" },
     ],
   },
-  { label: "News", href: "/news" },
+  { label: "News", href: "./news" },
   {
     label: "Customer Information",
-    href: "/credit-education",  // points to Consumer Education page
+    href: "./credit-education",  // points to Consumer Education page
     subItems: [
-      { label: "Self Inquiry", href: "/SelfInquiry", description: "Submit a self inquiry request" },
-      { label: "Complaint Handling", href: "/DisputeResolutionForm", description: "How we handle your concerns" },
-      { label: "Consumer Education", href: "/credit-education", description: "Resources to improve your credit knowledge" },
-      { label: "FAQs", href: "/FAQ", description: "Frequently asked questions" },
+      { label: "Self Inquiry", href: "./SelfInquiry", description: "Submit a self inquiry request" },
+      { label: "Complaint Handling", href: "./DisputeResolutionForm", description: "How we handle your concerns" },
+      { label: "Consumer Education", href: "./credit-education", description: "Resources to improve your credit knowledge" },
+      { label: "FAQs", href: "./FAQ", description: "Frequently asked questions" },
     ],
   },
-  { label: "Contact Us", href: "/contact" },
+  { label: "Contact Us", href: "./contact" },
 ];
 
 export default function Header() {
@@ -86,7 +86,7 @@ export default function Header() {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between py-4">
           {/* Logo */}
-          <a href="/" className="flex items-center gap-2 flex-shrink-0">
+          <a href="./" className="flex items-center gap-2 flex-shrink-0">
             <img
               src="/armada-logo.png"
               alt="Armada Credit Bureau"

@@ -13,19 +13,19 @@ import analyticsImage from "@/assets/analytics_african_men.png";
 
 const Footer = () => {
   const quickLinks = [
-    { label: "About Us", href: "/AboutArmada" },
-    { label: "Our Services", href: "/product-suites" },
-    { label: "Credit Reports", href: "/product-suites/credit-reports" },
-    { label: "Analytics", href: "/product-suites/analytics" },
-    { label: "Contact Us", href: "/contact" },
+    { label: "About Us", href: "./AboutArmada" },
+    { label: "Our Services", href: "./product-suites" },
+    { label: "Credit Reports", href: "./product-suites/credit-reports" },
+    { label: "Analytics", href: "./product-suites/analytics" },
+    { label: "Contact Us", href: "./contact" },
   ];
 
   const services = [
     { label: "Credit Information", href: "/product-suites/credit-reports" },
-    { label: "Risk Reports", href: "/product-suites/credit-reports" },
-    { label: "Data Analytics", href: "/product-suites/analytics" },
-    { label: "Portfolio Management", href: "/product-suites/portfolio" },
-    { label: "Data Management", href: "/product-suites/data-management" },
+    { label: "Risk Reports", href: "./product-suites/credit-reports" },
+    { label: "Data Analytics", href: "./product-suites/analytics" },
+    { label: "Portfolio Management", href: "./product-suites/portfolio" },
+    { label: "Data Management", href: "./product-suites/data-management" },
   ];
 
   return (
