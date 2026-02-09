@@ -26,20 +26,20 @@ interface NavItem {
   subItems?: NavSubItem[];
 }
 
-// ── Navigation Data ───────────────────────────────────── (updated hrefs only)
+// ── Navigation Data ───────────────────────────────────── (FIXED: Use absolute paths with leading /)
 const navItems: NavItem[] = [
   { label: "Home", href: "/" },
   {
     label: "About Us",
-    href: "/AboutArmada",  // main About page
+    href: "/AboutArmada",  
     subItems: [
-      { label: "About Armada CRB", href: "./AboutArmada", description: "Learn about our company and values" },
-      { label: "Our People", href: "./OurPeople", description: "Meet our leadership" },
+      { label: "About Armada CRB", href: "/AboutArmada", description: "Learn about our company and values" },
+      { label: "Our People", href: "/OurPeople", description: "Meet our leadership" },
     ],
   },
   {
     label: "Product Suites",
-    href: "./product-suites",
+    href: "/product-suites",
     subItems: [
       { label: "Credit Information & Risk Reports", href: "/product-suites/credit-reports", description: "Actionable insights for credit decisions" },
       { label: "Decision and Data Analytics", href: "/product-suites/analytics", description: "Data-driven business intelligence" },
@@ -47,18 +47,18 @@ const navItems: NavItem[] = [
       { label: "Data Management", href: "/product-suites/data-management", description: "Data is a valuable source of actionable insight" },
     ],
   },
-  { label: "News", href: "./news" },
+  { label: "News", href: "/news" },
   {
     label: "Customer Information",
-    href: "./credit-education",  // points to Consumer Education page
+    href: "/credit-education",
     subItems: [
-      { label: "Self Inquiry", href: "./SelfInquiry", description: "Submit a self inquiry request" },
-      { label: "Complaint Handling", href: "./DisputeResolutionForm", description: "How we handle your concerns" },
-      { label: "Consumer Education", href: "./credit-education", description: "Resources to improve your credit knowledge" },
-      { label: "FAQs", href: "./FAQ", description: "Frequently asked questions" },
+      { label: "Self Inquiry", href: "/SelfInquiry", description: "Submit a self inquiry request" },
+      { label: "Complaint Handling", href: "/DisputeResolutionForm", description: "How we handle your concerns" },
+      { label: "Consumer Education", href: "/credit-education", description: "Resources to improve your credit knowledge" },
+      { label: "FAQs", href: "/FAQ", description: "Frequently asked questions" },
     ],
   },
-  { label: "Contact Us", href: "./contact" },
+  { label: "Contact Us", href: "/contact" },
 ];
 
 export default function Header() {
@@ -86,7 +86,7 @@ export default function Header() {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between py-4">
           {/* Logo */}
-          <a href="./" className="flex items-center gap-2 flex-shrink-0">
+          <a href="/" className="flex items-center gap-2 flex-shrink-0">
             <img
               src="/armada-logo.png"
               alt="Armada Credit Bureau"
@@ -109,13 +109,12 @@ export default function Header() {
                           className={cn(
                             "bg-transparent focus:bg-transparent data-[state=open]:bg-transparent hover:bg-transparent hover:text-[#1A2636] px-4 py-2",
                             textColor,
-                            "transition-none", // Remove all hover transitions
+                            "transition-none",
                             isItemActive && `${activeColor} border-b-2 border-[#91CD95]`
                           )}
                         >
                           {item.label}
                         </NavigationMenuTrigger>
-                        {/* Dropdown content - aligned directly under the trigger button */}
                         <NavigationMenuContent>
                           <ul className="flex flex-col gap-1 p-4 min-w-[350px]">
                             {item.subItems.map((sub) => {
@@ -128,7 +127,7 @@ export default function Header() {
                                       className={cn(
                                         "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none w-full text-left hover:text-[#1A2636]",
                                         isSubActive && `${activeColor} ${activeBg}`,
-                                        "transition-none" // No hover effect
+                                        "transition-none"
                                       )}
                                     >
                                       <div className="text-sm font-medium leading-none">{sub.label}</div>
@@ -152,7 +151,7 @@ export default function Header() {
                           className={cn(
                             "group inline-flex h-10 items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium hover:text-[#1A2636]",
                             textColor,
-                            "transition-none", // No hover effect
+                            "transition-none",
                             isItemActive && `${activeColor} border-b-2 border-[#91CD95]`
                           )}
                         >
@@ -203,7 +202,7 @@ export default function Header() {
                           className={cn(
                             "flex w-full items-center justify-between py-3 px-3 font-medium rounded-md",
                             textColor,
-                            "transition-none", // No hover effect
+                            "transition-none",
                             isActive(item.href) && activeColor
                           )}
                         >
@@ -222,7 +221,7 @@ export default function Header() {
                               href={sub.href}
                               className={cn(
                                 "block py-2.5 px-3 text-sm rounded-md",
-                                "transition-none", // No hover effect
+                                "transition-none",
                                 isActive(sub.href) ? activeColor : "text-muted-foreground"
                               )}
                               onClick={() => setIsMenuOpen(false)}
@@ -238,7 +237,7 @@ export default function Header() {
                         className={cn(
                           "block py-3 px-3 font-medium rounded-md",
                           textColor,
-                          "transition-none", // No hover effect
+                          "transition-none",
                           isActive(item.href) && activeColor
                         )}
                         onClick={() => setIsMenuOpen(false)}
@@ -265,14 +264,13 @@ export default function Header() {
   );
 }
 
-// SocialLink - no hover color changes
 function SocialLink({ icon: Icon, size = 20, href = "#" }: { icon: any; size?: number; href?: string }) {
   return (
     <a 
       href={href}
       target={href !== "#" ? "_blank" : undefined}
       rel={href !== "#" ? "noopener noreferrer" : undefined}
-      className="text-muted-foreground transition-none" // No hover effect
+      className="text-muted-foreground transition-none"
     >
       <Icon className="w-5 h-5" />
     </a>
