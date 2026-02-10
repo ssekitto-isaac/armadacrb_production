@@ -40,12 +40,12 @@ const DataManagementPage = () => {
       <Header />
       <main className="flex-1">
         <div
-          className="relative h-[500px] flex items-center justify-center bg-cover bg-center"
+          className="relative h-[500px] flex items-center bg-cover bg-center"
           style={{ backgroundImage: `url(${dataImage})` }}
         >
           <div className="absolute inset-0 bg-black/40" />
-          <div className="relative text-center px-4">
-            <h1 className="text-5xl md:text-6xl font-heading font-bold text-white mb-4">
+          <div className="relative container mx-auto px-4 md:px-12 lg:px-28">
+            <h1 className="text-5xl md:text-6xl text-left font-heading font-bold text-white mb-4">
               Data Management
             </h1>
             <p className="text-xl text-white">Home - Product Suites - Data Management</p>
