@@ -90,7 +90,7 @@ export default function Header() {
             <img
               src="/armada-logo.png"
               alt="Armada Credit Bureau"
-              className="h-8 md:h-10 object-contain"
+              className="h-18 md:h-14 object-contain"
             />
             <span className="sr-only">Armada Credit Bureau</span>
           </a>
@@ -107,7 +107,7 @@ export default function Header() {
                       <>
                         <NavigationMenuTrigger
                           className={cn(
-                            "bg-transparent focus:bg-transparent data-[state=open]:bg-transparent hover:bg-transparent hover:text-[#1A2636] px-4 py-2 text-sm font-bold",
+                            "bg-transparent focus:bg-transparent data-[state=open]:bg-transparent hover:bg-transparent hover:text-[#1A2636] px-4 py-2 text-base font-bold",
                             textColor,
                             "transition-none",
                             isItemActive && `${activeColor} border-b-2 border-[#91CD95]`
@@ -131,7 +131,7 @@ export default function Header() {
                                         "transition-none font-bold"
                                       )}
                                     >
-                                      <div className="text-sm font-bold leading-none">{sub.label}</div>
+                                      <div className="text-base font-bold leading-none">{sub.label}</div>
                                       {sub.description && (
                                         <p className="line-clamp-2 text-xs leading-snug text-muted-foreground font-normal">
                                           {sub.description}
@@ -150,7 +150,7 @@ export default function Header() {
                         <a
                           href={item.href}
                           className={cn(
-                            "group inline-flex h-10 items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-bold hover:text-[#1A2636]",
+                            "group inline-flex h-10 items-center justify-center rounded-md bg-transparent px-4 py-2 text-base font-bold hover:text-[#1A2636]",
                             textColor,
                             "transition-none",
                             isItemActive && `${activeColor} border-b-2 border-[#91CD95]`
@@ -186,7 +186,7 @@ export default function Header() {
               <SheetHeader>
                 <SheetTitle className="text-left">
                   <div className="flex items-center gap-2">
-                    <img src="/armada-logo.png" alt="Armada" className="w-8 h-8 object-contain" />
+                    <img src="/armada-logo.png" alt="Armada" className="w-24 h-24 object-contain" />
                     <span className="text-xl font-bold text-[#1A2636]">ARMADA</span>
                   </div>
                 </SheetTitle>
@@ -202,7 +202,7 @@ export default function Header() {
                       >
                         <CollapsibleTrigger
                           className={cn(
-                            "flex w-full items-center justify-between py-3 px-3 font-bold text-sm rounded-md",
+                            "flex w-full items-center justify-between py-3 px-3 font-bold text-base rounded-md",
                             textColor,
                             "transition-none",
                             isActive(item.href) && activeColor
@@ -223,7 +223,7 @@ export default function Header() {
                               key={sub.label}
                               href={sub.href}
                               className={cn(
-                                "block py-2.5 px-3 text-sm font-bold rounded-md",
+                                "block py-2.5 px-3 text-base font-bold rounded-md",
                                 "transition-none",
                                 isActive(sub.href) ? activeColor : "text-muted-foreground"
                               )}
@@ -238,7 +238,7 @@ export default function Header() {
                       <a
                         href={item.href}
                         className={cn(
-                          "block py-3 px-3 font-bold text-sm rounded-md",
+                          "block py-3 px-3 font-bold text-base rounded-md",
                           textColor,
                           "transition-none",
                           isActive(item.href) && activeColor

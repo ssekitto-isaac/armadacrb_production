@@ -1,11 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-
-const stats = [
-  { value: 100, suffix: "+", label: "Completed Projects" },
-  { value: 99, suffix: "+", label: "Satisfied Clients" },
-  { value: 25, suffix: "+", label: "Team Members" },
-  { value: 18, suffix: "+", label: "Awards Winner" },
-];
+import analyticsImage from "@/assets/stats2.png";
 
 const useCountUp = (end: number, duration: number = 2000, start: boolean = false) => {
   const [count, setCount] = useState(0);
@@ -37,11 +31,11 @@ const StatItem = ({ value, suffix, label, inView }: { value: number; suffix: str
   const count = useCountUp(value, 2000, inView);
   
   return (
-    <div className="stat-card">
-      <div className="stat-number">
+    <div className="text-center">
+      <div className="text-4xl font-bold text-white mb-2">
         {count}{suffix}
       </div>
-      <div className="stat-label">{label}</div>
+      <div className="text-white/80 text-sm">{label}</div>
     </div>
   );
 };
@@ -68,42 +62,43 @@ const StatsSection = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-20 bg-primary">
-      <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          {/* Stats */}
-          <div className="grid grid-cols-2 gap-8">
-            {stats.map((stat) => (
-              <StatItem
-                key={stat.label}
-                value={stat.value}
-                suffix={stat.suffix}
-                label={stat.label}
-                inView={inView}
-              />
-            ))}
-          </div>
+    <section 
+      ref={sectionRef} 
+      className="py-20 relative overflow-hidden"
+      style={{
+        backgroundImage: `url(${analyticsImage})`,
+        backgroundAttachment: "fixed",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      {/* Overlay for color consistency */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ zIndex: 0, backgroundColor: "rgba(0, 30, 121, 0.77)" }}
+      />
 
-          {/* Content */}
-          <div className="text-primary-foreground">
-            <span className="text-secondary font-semibold text-sm uppercase tracking-wider mb-2 block">
-              Statistic
-            </span>
-            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-6">
-              Statistic is used to estimate the value of a profit.
-            </h2>
-            <p className="text-primary-foreground/80 text-lg mb-8">
-              The main difference between Statistic and Statistics is that the Statistic
-              is a single measure of some attribute of a sample and Statistics is a
-              study of the collection.
-            </p>
-            <a
-              href="#"
-              className="btn-secondary inline-flex items-center gap-2"
-            >
-              Read more
-            </a>
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="text-center mb-16">
+          <div className="flex items-center justify-center gap-4 mb-6">
+            <div className="h-1 w-8 h-18 bg-[#91CD95]"></div>
+            <span className="text-white font-extrabold text-base tracking-wider">Let's Get Started</span>
+            <div className="h-1 w-8 h-18 bg-[#91CD95]"></div>
           </div>
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            Are you ready to know your<br />credit score?
+          </h2>
+          <a
+            href="/contact"
+            className="inline-flex items-center gap-3 bg-[#91CD95] hover:bg-[#91CD95] text-white px-8 py-3 rounded-full font-bold transition-colors mt-8 text-lg"
+          >
+            <span>Contact Us</span>
+            <div className="w-8 h-9 rounded-full bg-white flex items-center justify-center">
+              {/* <span className="text-red-600 text-sm">→</span> */}
+            </div>
+
+            
+          </a>
         </div>
       </div>
     </section>

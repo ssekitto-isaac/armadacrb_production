@@ -1,5 +1,5 @@
 import TopBar from "@/components/TopBar";
-import Header from "@/components/Header";
+import Header from "@/components/Header2";
 import HeroSection from "@/components/HeroSection";
 import StandardsSection from "@/components/StandardsSection";
 import CoreValues from "@/components/CoreValues";

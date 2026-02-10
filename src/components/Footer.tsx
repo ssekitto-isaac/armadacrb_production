@@ -42,7 +42,7 @@ const Footer = () => {
       {/* Overlay for color consistency */}
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{ zIndex: 0, backgroundColor: "rgba(0, 30, 49, 0.9)" }}
+        style={{ zIndex: 0, backgroundColor: "rgba(0, 14, 23, 0.95)" }}
       />
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">

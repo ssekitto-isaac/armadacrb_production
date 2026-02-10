@@ -1,5 +1,5 @@
 import TopBar from "@/components/TopBar";
-import Header from "@/components/Header";
+import Header from "@/components/Header2";
 import Footer from "@/components/Footer";
 import armada25 from "@/assets/credit_report.png";
 import { FileText, BarChart3, CheckCircle, ArrowLeft, ArrowRight } from "lucide-react";

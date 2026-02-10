@@ -1,5 +1,5 @@
 import TopBar from "@/components/TopBar";
-import Header from "@/components/Header";
+import Header from "@/components/Header2";
 import ProductHero from "@/components/ProductHero";
 import Footer from "@/components/Footer";
 import armada23 from "@/assets/armada-23.jpg";

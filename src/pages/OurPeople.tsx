@@ -2,7 +2,7 @@ import React from "react";
 import { ArrowRight, Award, Globe, Linkedin, Mail } from "lucide-react";
 import ceoImage from "@/assets/CEO.jpg";
 import TopBar from "@/components/TopBar";
-import Header from "@/components/Header";
+import Header from "@/components/Header2";
 import Footer from "@/components/Footer";
 import LiveChatWidget from "@/components/LiveChat";
 

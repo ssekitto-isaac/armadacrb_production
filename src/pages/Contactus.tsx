@@ -2,7 +2,7 @@ import { useState } from "react";
 import { MapPin, Phone, Mail, Clock, Send, CheckCircle2, ChevronDown, ChevronRight, Globe, Shield, Zap, MessageSquare } from "lucide-react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import TopBar from "@/components/TopBar";
-import Header from "@/components/Header";
+import Header from "@/components/Header2";
 import Footer from "@/components/Footer";
 
 const Contact = () => {

@@ -20,7 +20,7 @@
     --popover-foreground: 215 25% 15%;
 
     /* Primary - Deep Navy */
-    --primary: 204 100% 24%;
+    --primary: 204 100% 34%;
     --primary-foreground: 0 0% 100%;
 
     /* Secondary - Teal Accent */
@@ -47,9 +47,9 @@
     --radius: 0.5rem;
 
     /* Custom Armada colors */
-    --navy: 204 100% 24%;
-    --navy-dark: 204 100% 24%;
-    --navy-light: 204 100% 24%;
+    --navy: 204 100% 34%;
+    --navy-dark: 204 100% 34%;
+    --navy-light: 204 100% 34%;
     --teal: 174 62% 47%;
     --teal-light: 174 62% 55%;
     --coral: 16 85% 58%;
@@ -129,8 +129,13 @@
   }
 
   /* Navigation styles */
-  .nav-link {
-    @apply relative font-medium text-foreground hover:text-secondary transition-colors duration-200;
+  /* .nav-link {
+    @apply relative font-extrabold text-foreground hover:text-secondary transition-colors duration-200;
+  } */
+
+  /* .nav-link {
+  @apply relative text-foreground hover:text-secondary transition-colors duration-200;
+  font-weight: 800;   
   }
 
   .nav-link::after {
@@ -141,7 +146,7 @@
   .nav-link:hover::after,
   .nav-link.active::after {
     @apply w-full;
-  }
+  } */
 
   /* Hero section */
   .hero-section {
@@ -193,7 +198,7 @@
   }
 
   .section-title-dark {
-    @apply text-3xl md:text-4xl lg:text-5xl font-bold text-primary leading-tight;
+    @apply text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight;
   }
 
   /* Card hover effects */
@@ -275,7 +280,8 @@
 
   /* Highlight a product card briefly when navigated to via anchor */
   .product-card:target {
-    box-shadow: 0 24px 48px rgba(0, 102, 171, 0.18);
+    /* box-shadow: 0 24px 48px rgba(0, 102, 171, 0.18); */
+    box-shadow: 0 24px 48px rgba(0, 0, 39, 117);
     border-color: hsl(var(--navy));
     transform: translateY(-4px);
     transition: box-shadow 250ms ease, transform 200ms ease;

@@ -1,5 +1,5 @@
 import TopBar from "@/components/TopBar";
-import Header from "@/components/Header";
+import Header from "@/components/Header2";
 import Footer from "@/components/Footer";
 import dataImage from "@/assets/data.jpg";
 import { Database, Shield, Zap, ArrowLeft, ArrowRight } from "lucide-react";

@@ -4,7 +4,7 @@ import heroImage from "@/assets/FinanaceTeam1.jpg"; // team or data visualizatio
 import teamImage from "@/assets/FinanceAnyalysing.jpg"; // professional team photo
 import LiveChatWidget from "@/components/LiveChat";
 import TopBar from "@/components/TopBar";
-import Header from "@/components/Header";
+import Header from "@/components/Header2";
 import Footer from "@/components/Footer";
 
 

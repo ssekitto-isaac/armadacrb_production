@@ -3,7 +3,7 @@ import { ArrowRight, BookOpen, ShieldCheck, TrendingUp, Users } from "lucide-rea
 import literacyHero from "@/assets/FinanceWorkshop2.jpg"; // workshop / financial education image
 import LiveChatWidget from "@/components/LiveChat";
 import TopBar from "@/components/TopBar";
-import Header from "@/components/Header";
+import Header from "@/components/Header2";
 import Footer from "@/components/Footer";
 
 const benefits = [

@@ -1,5 +1,5 @@
 import TopBar from "@/components/TopBar";
-import Header from "@/components/Header";
+import Header from "@/components/Header2";
 import Footer from "@/components/Footer";
 import menArmada from "@/assets/men_armada.jpeg";
 import { BarChart3, AlertCircle, Zap, Workflow, Clock, TrendingUp, Filter, ArrowLeft, ArrowRight } from "lucide-react";
