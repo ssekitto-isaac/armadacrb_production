@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 // Background images
 import hero1 from "@/assets/young-team.png";
@@ -19,7 +20,7 @@ const slides = [
     title: "",
     subtitle: "We are global leaders in credit reporting and analytics",
     cta: "View Now",
-    link: "#",
+    link: "/AboutArmada",
     image: hero1
   },
   {
@@ -27,7 +28,7 @@ const slides = [
     subtitle:
       "Our predictive scoring module delivers a high-precision measure of credit risk, empowering lenders to anticipate borrower behavior and minimize default exposure with confidence.",
     cta: "View Now",
-    link: "./armadascore",
+    link: "/armadascore",
     image: hero6,
   },
   {
@@ -35,7 +36,7 @@ const slides = [
     subtitle:
       "Our predictive score module makes it possible for creditors to access risk reports about credit applicants",
     cta: "View Now",
-    link: "./product-suites/credit-reports",
+    link: "/product-suites/credit-reports",
     image: hero2,
   },
   {
@@ -43,7 +44,7 @@ const slides = [
     subtitle:
       "With our analytics services, you will get more insight from data while learning more about prevailing trends",
     cta: "View More",
-    link: "./analytics",
+    link: "/product-suites/analytics",
     image: hero3,
   },
   {
@@ -51,7 +52,7 @@ const slides = [
     subtitle:
       "Credit education is key to building a healthy credit culture. Learn more about credit today",
     cta: "View More",
-    link: "./credit-education",
+    link: "/credit-education",
     image: hero4,
   },
   {
@@ -86,14 +87,6 @@ const HeroSection = () => {
   const [isPaused, setIsPaused] = useState(false);
   const [hasAnimated, setHasAnimated] = useState(false);
 
-  const handleCTA = (e: any, slideIndex: number) => {
-    if (slideIndex === 0 || slideIndex === 1) {
-      e?.preventDefault?.();
-      const el = document.getElementById("standards");
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  };
-
   useEffect(() => {
     const start = () => {
       intervalRef.current = window.setInterval(() => {
@@ -118,8 +111,10 @@ const HeroSection = () => {
   }, [currentSlide]);
 
   const goToSlide = (index: number) => setCurrentSlide(index);
+  
   const prevSlide = () =>
     setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+  
   const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slides.length);
 
   const isWelcomeSlide = currentSlide === 0;
@@ -130,20 +125,29 @@ const HeroSection = () => {
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      {/* Background Images */}
+      {/* Background Images with Crossfade */}
       {slides.map((slide, index) => (
-        <div
+        <motion.div
           key={index}
-          className={`absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000 ${
-            index === currentSlide ? "opacity-100" : "opacity-0"
-          }`}
-          style={{ backgroundImage: `url(${slide.image})` }}
+          initial={false}
+          animate={{
+            opacity: index === currentSlide ? 1 : 0,
+          }}
+          transition={{
+            duration: 1.2,
+            ease: "easeInOut"
+          }}
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ 
+            backgroundImage: `url(${slide.image})`,
+            zIndex: index === currentSlide ? 2 : 1
+          }}
           aria-hidden={index !== currentSlide}
         />
       ))}
 
       {/* Overlay - Stronger on mobile for better text readability */}
-      <div className="hero-overlay absolute inset-0 bg-black/40 md:bg-black/30" />
+      <div className="hero-overlay absolute inset-0 bg-black/40 md:bg-black/30 z-[3]" />
 
       {/* Content - Responsive padding and spacing */}
       <div className="relative z-10 container mx-auto px-4 sm:px-6 md:px-12 lg:px-28 py-12 sm:py-16 md:py-20 lg:py-28 h-full flex items-center">
@@ -240,14 +244,13 @@ const HeroSection = () => {
                 transition={{ duration: 0.6, delay: 1.5, ease: "easeOut" }}
                 className="flex items-center gap-6 justify-center md:justify-start"
               >
-                <a
-                  href={slides[0].link}
-                  onClick={(e) => handleCTA(e, 0)}
+                <Link
+                  to={slides[0].link}
                   className="btn-secondary flex items-center gap-2 group px-6 py-3 text-sm sm:text-base"
                 >
                   {slides[0].cta}
                   <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
-                </a>
+                </Link>
               </motion.div>
             </div>
           ) : (
@@ -275,14 +278,13 @@ const HeroSection = () => {
 
               {/* CTA Button */}
               <div className="flex items-center gap-6 justify-center md:justify-start">
-                <a
-                  href={slides[currentSlide].link}
-                  onClick={(e) => handleCTA(e, currentSlide)}
+                <Link
+                  to={slides[currentSlide].link}
                   className="btn-secondary flex items-center gap-2 group px-5 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base"
                 >
                   {slides[currentSlide].cta}
                   <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
-                </a>
+                </Link>
               </div>
             </>
           )}
