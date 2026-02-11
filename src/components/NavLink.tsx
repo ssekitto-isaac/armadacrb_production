@@ -1,36 +1,49 @@
-import { NavLink } from "@/components/NavLink";
+import { NavLink } from "react-router-dom";
 
 const MainNav = () => {
   return (
     <nav className="flex items-center gap-8">
       <NavLink
         to="/"
-        className="text-sm font-medium text-foreground hover:text-secondary"
-        activeClassName="text-secondary"
+        className={({ isActive }) =>
+          `text-sm font-medium hover:text-secondary ${
+            isActive ? "text-secondary" : "text-foreground"
+          }`
+        }
+        end
       >
         Home
       </NavLink>
 
       <NavLink
         to="/product-suites"
-        className="text-sm font-medium text-foreground hover:text-secondary"
-        activeClassName="text-secondary"
+        className={({ isActive }) =>
+          `text-sm font-medium hover:text-secondary ${
+            isActive ? "text-secondary" : "text-foreground"
+          }`
+        }
       >
         Product Suites
       </NavLink>
 
       <NavLink
         to="/news"
-        className="text-sm font-medium text-foreground hover:text-secondary"
-        activeClassName="text-secondary"
+        className={({ isActive }) =>
+          `text-sm font-medium hover:text-secondary ${
+            isActive ? "text-secondary" : "text-foreground"
+          }`
+        }
       >
         News
       </NavLink>
 
       <NavLink
         to="/contact"
-        className="text-sm font-medium text-foreground hover:text-secondary"
-        activeClassName="text-secondary"
+        className={({ isActive }) =>
+          `text-sm font-medium hover:text-secondary ${
+            isActive ? "text-secondary" : "text-foreground"
+          }`
+        }
       >
         Contact
       </NavLink>

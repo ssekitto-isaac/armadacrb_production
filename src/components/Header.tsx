@@ -1,19 +1,9 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown, Twitter, Linkedin, Instagram, Youtube } from "lucide-react";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
-// ── Types ────────────────────────────────────────────────
 interface NavSubItem {
   label: string;
   href: string;
@@ -26,12 +16,11 @@ interface NavItem {
   subItems?: NavSubItem[];
 }
 
-// ── Navigation Data ───────────────────────────────────── (FIXED: Use absolute paths with leading /)
 const navItems: NavItem[] = [
   { label: "Home", href: "/" },
   {
     label: "About Us",
-    href: "/AboutArmada",  
+    href: "/AboutArmada",
     subItems: [
       { label: "About Armada CRB", href: "/AboutArmada", description: "Learn about our company and values" },
       { label: "Our People", href: "/OurPeople", description: "Meet our leadership" },
@@ -63,14 +52,9 @@ const navItems: NavItem[] = [
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [openMobileDropdowns, setOpenMobileDropdowns] = useState<string[]>([]);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const location = useLocation();
-
-  const toggleMobileDropdown = (label: string) => {
-    setOpenMobileDropdowns((prev) =>
-      prev.includes(label) ? prev.filter((item) => item !== label) : [...prev, label]
-    );
-  };
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const isActive = (href: string) => {
     if (href.startsWith("#")) return location.hash === href;
@@ -81,10 +65,22 @@ export default function Header() {
   const activeColor = "text-[#91CD95]";
   const activeBg = "bg-[#EAF7EC]";
 
+  // ✅ Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setOpenDropdown(null);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
     <header className="bg-background sticky top-0 z-50 shadow-sm">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between py-4">
+
           {/* Logo */}
           <a href="/" className="flex items-center gap-2 flex-shrink-0">
             <img
@@ -92,78 +88,85 @@ export default function Header() {
               alt="Armada Credit Bureau"
               className="h-8 md:h-10 object-contain"
             />
-            <span className="sr-only">Armada Credit Bureau</span>
           </a>
 
           {/* Desktop Nav */}
-          <NavigationMenu className="hidden lg:flex ml-8 mr-auto">
-            <NavigationMenuList className="gap-0.5">
-              {navItems.map((item) => {
-                const isItemActive = isActive(item.href);
+          <nav className="hidden lg:flex ml-8 mr-auto gap-6" ref={dropdownRef}>
+            {navItems.map((item) => {
+              const isItemActive = isActive(item.href);
+              const isOpen = openDropdown === item.label;
 
-                return (
-                  <NavigationMenuItem key={item.label}>
-                    {item.subItems ? (
-                      <>
-                        <NavigationMenuTrigger
-                          className={cn(
-                            "bg-transparent focus:bg-transparent data-[state=open]:bg-transparent hover:bg-transparent hover:text-[#1A2636] px-4 py-2",
-                            textColor,
-                            "transition-none",
-                            isItemActive && `${activeColor} border-b-2 border-[#91CD95]`
-                          )}
-                        >
-                          {item.label}
-                        </NavigationMenuTrigger>
-                        <NavigationMenuContent>
-                          <ul className="flex flex-col gap-1 p-4 min-w-[350px]">
-                            {item.subItems.map((sub) => {
-                              const isSubActive = isActive(sub.href);
-                              return (
-                                <li key={sub.label}>
-                                  <NavigationMenuLink asChild>
-                                    <a
-                                      href={sub.href}
-                                      className={cn(
-                                        "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none w-full text-left hover:text-[#1A2636]",
-                                        isSubActive && `${activeColor} ${activeBg}`,
-                                        "transition-none"
-                                      )}
-                                    >
-                                      <div className="text-sm font-medium leading-none">{sub.label}</div>
-                                      {sub.description && (
-                                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                                          {sub.description}
-                                        </p>
-                                      )}
-                                    </a>
-                                  </NavigationMenuLink>
-                                </li>
-                              );
-                            })}
-                          </ul>
-                        </NavigationMenuContent>
-                      </>
-                    ) : (
-                      <NavigationMenuLink asChild>
-                        <a
-                          href={item.href}
-                          className={cn(
-                            "group inline-flex h-10 items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium hover:text-[#1A2636]",
-                            textColor,
-                            "transition-none",
-                            isItemActive && `${activeColor} border-b-2 border-[#91CD95]`
-                          )}
-                        >
-                          {item.label}
-                        </a>
-                      </NavigationMenuLink>
+              return (
+                <div key={item.label} className="relative">
+
+                  {/* Parent */}
+                  <button
+                    onClick={() =>
+                      item.subItems
+                        ? setOpenDropdown(isOpen ? null : item.label)
+                        : null
+                    }
+                    className={cn(
+                      "flex items-center gap-1 px-4 py-2 text-sm font-medium transition-colors",
+                      textColor,
+                      isItemActive && `${activeColor} border-b-2 border-[#91CD95]`
                     )}
-                  </NavigationMenuItem>
-                );
-              })}
-            </NavigationMenuList>
-          </NavigationMenu>
+                  >
+                    {item.label}
+
+                    {item.subItems && (
+                      <ChevronDown
+                        size={16}
+                        className={cn(
+                          "transition-transform duration-300",
+                          isOpen && "rotate-180"
+                        )}
+                      />
+                    )}
+                  </button>
+
+                  {/* Dropdown */}
+                  {item.subItems && (
+                    <div
+                      className={cn(
+                        "absolute left-0 top-full mt-2 w-[350px] rounded-xl border bg-white shadow-lg p-4 z-50 transition-all duration-300 origin-top",
+                        isOpen
+                          ? "opacity-100 translate-y-0 scale-100"
+                          : "opacity-0 translate-y-2 scale-95 pointer-events-none"
+                      )}
+                    >
+                      <ul className="flex flex-col gap-1">
+                        {item.subItems.map((sub) => {
+                          const isSubActive = isActive(sub.href);
+
+                          return (
+                            <li key={sub.label}>
+                              <a
+                                href={sub.href}
+                                className={cn(
+                                  "block rounded-md p-3 hover:bg-gray-50 transition-all duration-200",
+                                  isSubActive && `${activeColor} ${activeBg}`
+                                )}
+                              >
+                                <div className="text-sm font-medium">
+                                  {sub.label}
+                                </div>
+                                {sub.description && (
+                                  <p className="text-sm text-muted-foreground mt-1">
+                                    {sub.description}
+                                  </p>
+                                )}
+                              </a>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </nav>
 
           {/* Desktop Socials */}
           <div className="hidden lg:flex items-center gap-5 ml-auto">
@@ -173,91 +176,54 @@ export default function Header() {
             <SocialLink icon={Youtube} href="#" />
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu */}
           <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
             <SheetTrigger asChild>
-              <button className="lg:hidden p-2 text-[#1A2636]" aria-label="Toggle menu">
-                {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              <button className="lg:hidden p-2 text-[#1A2636]">
+                {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[300px] sm:w-[340px]">
+
+            <SheetContent side="right" className="w-[300px] sm:w-[340px] overflow-y-auto">
               <SheetHeader>
-                <SheetTitle className="text-left">
-                  <div className="flex items-center gap-2">
-                    <img src="/armada-logo.png" alt="Armada" className="w-8 h-8 object-contain" />
-                    <span className="text-xl font-bold text-[#1A2636]">ARMADA</span>
-                  </div>
-                </SheetTitle>
+                <SheetTitle>ARMADA</SheetTitle>
               </SheetHeader>
 
-              <nav className="mt-8 flex flex-col gap-1">
+              <nav className="mt-8 flex flex-col gap-2">
                 {navItems.map((item) => (
-                  <div key={item.label}>
-                    {item.subItems ? (
-                      <Collapsible
-                        open={openMobileDropdowns.includes(item.label)}
-                        onOpenChange={() => toggleMobileDropdown(item.label)}
-                      >
-                        <CollapsibleTrigger
-                          className={cn(
-                            "flex w-full items-center justify-between py-3 px-3 font-medium rounded-md",
-                            textColor,
-                            "transition-none",
-                            isActive(item.href) && activeColor
-                          )}
-                        >
-                          {item.label}
-                          <ChevronDown
-                            className={cn(
-                              "h-4 w-4 transition-transform duration-200",
-                              openMobileDropdowns.includes(item.label) && "rotate-180"
-                            )}
-                          />
-                        </CollapsibleTrigger>
-                        <CollapsibleContent className="pl-4 pt-1 pb-3">
-                          {item.subItems.map((sub) => (
-                            <a
-                              key={sub.label}
-                              href={sub.href}
-                              className={cn(
-                                "block py-2.5 px-3 text-sm rounded-md",
-                                "transition-none",
-                                isActive(sub.href) ? activeColor : "text-muted-foreground"
-                              )}
-                              onClick={() => setIsMenuOpen(false)}
-                            >
-                              {sub.label}
-                            </a>
-                          ))}
-                        </CollapsibleContent>
-                      </Collapsible>
-                    ) : (
-                      <a
-                        href={item.href}
-                        className={cn(
-                          "block py-3 px-3 font-medium rounded-md",
-                          textColor,
-                          "transition-none",
-                          isActive(item.href) && activeColor
-                        )}
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        {item.label}
-                      </a>
+                  <div key={item.label} className="flex flex-col">
+                    <a
+                      href={item.href}
+                      className={cn(
+                        "py-3 px-4 font-medium rounded-lg",
+                        textColor,
+                        isActive(item.href) && cn(activeColor, activeBg)
+                      )}
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {item.label}
+                    </a>
+
+                    {item.subItems && (
+                      <div className="flex flex-col mt-1 mb-3">
+                        {item.subItems.map((sub) => (
+                          <a
+                            key={sub.label}
+                            href={sub.href}
+                            className="py-2 px-9 text-sm text-muted-foreground hover:bg-gray-50 rounded-lg"
+                            onClick={() => setIsMenuOpen(false)}
+                          >
+                            {sub.label}
+                          </a>
+                        ))}
+                      </div>
                     )}
                   </div>
                 ))}
               </nav>
-
-              {/* Mobile Socials */}
-              <div className="flex justify-center gap-6 mt-10 pt-6 border-t">
-                <SocialLink icon={Twitter} size={20} href="https://x.com/ArmadaCRB" />
-                <SocialLink icon={Linkedin} size={20} href="https://ug.linkedin.com/company/armada-credit-bureau" />
-                <SocialLink icon={Instagram} size={20} href="#" />
-                <SocialLink icon={Youtube} size={20} href="#" />
-              </div>
             </SheetContent>
           </Sheet>
+
         </div>
       </div>
     </header>
@@ -266,13 +232,13 @@ export default function Header() {
 
 function SocialLink({ icon: Icon, size = 20, href = "#" }: { icon: any; size?: number; href?: string }) {
   return (
-    <a 
+    <a
       href={href}
       target={href !== "#" ? "_blank" : undefined}
       rel={href !== "#" ? "noopener noreferrer" : undefined}
-      className="text-muted-foreground transition-none"
+      className="text-muted-foreground hover:text-[#1A2636] transition-colors"
     >
-      <Icon className="w-5 h-5" />
+      <Icon size={size} />
     </a>
   );
 }
