@@ -18,21 +18,25 @@ import {
 import TopBar from "@/components/TopBar";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-
-// Hero image (used in both top hero and bottom CTA)
 import heroImage from "@/assets/DisputeResolution.jpg";
 import LiveChatWidget from "@/components/LiveChat";
 
 const DisputeResolution = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    fullName: "",
+    firstName: "",
+    lastName: "",
+    dateOfBirth: "",
+    residentialAddress: "",
+    city: "",
+    country: "",
     email: "",
     phone: "",
-    reportReference: "",
+    disputeType: "",
     disputeNature: "",
     attachments: null as File | null,
   });
+
   const [fileName, setFileName] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -40,11 +44,17 @@ const DisputeResolution = () => {
     e.preventDefault();
     setIsSubmitted(true);
     setTimeout(() => setIsSubmitted(false), 6000);
+
     setFormData({
-      fullName: "",
+      firstName: "",
+      lastName: "",
+      dateOfBirth: "",
+      residentialAddress: "",
+      city: "",
+      country: "",
       email: "",
       phone: "",
-      reportReference: "",
+      disputeType: "",
       disputeNature: "",
       attachments: null,
     });
@@ -62,7 +72,7 @@ const DisputeResolution = () => {
     }
   };
 
-  // Hover expand variants (unchanged)
+  // Hover expand variants
   const cardVariants = {
     rest: {
       scale: 1,
@@ -76,7 +86,7 @@ const DisputeResolution = () => {
     },
   };
 
-  // Gentle floating animation (unchanged)
+  // Gentle floating animation
   const floatVariants = {
     float: {
       y: [0, -15, 0],
@@ -94,50 +104,48 @@ const DisputeResolution = () => {
       <TopBar />
       <Header />
 
-     <main className="flex-grow">
-  {/* Hero – floating icons removed */}
-  <section className="relative h-[420px] md:h-[520px] overflow-hidden">
-    <div
-      className="absolute inset-0 bg-cover bg-center transition-transform duration-[1500ms] scale-105 hover:scale-110"
-      style={{ backgroundImage: `url(${heroImage})` }}
-    />
-    <div className="absolute inset-0 bg-gradient-to-b from-primary/65 via-primary/75 to-primary/85" />
+      <main className="flex-grow">
+        {/* Hero */}
+        <section className="relative h-[420px] md:h-[520px] overflow-hidden">
+          <div
+            className="absolute inset-0 bg-cover bg-center transition-transform duration-[1500ms] scale-105 hover:scale-110"
+            style={{ backgroundImage: `url(${heroImage})` }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-primary/65 via-primary/75 to-primary/85" />
 
-    <div className="relative z-10 container mx-auto px-6 md:px-20 lg:px-28 h-full flex items-center">
-      <div className="max-w-3xl">
-        <div className="flex items-center gap-3 text-primary-foreground/80 text-sm uppercase tracking-wider mb-5">
-          <span>Home</span>
-          <ChevronRight className="w-4 h-4" />
-          <span className="font-semibold">Dispute Resolution</span>
-        </div>
+          <div className="relative z-10 container mx-auto px-6 md:px-20 lg:px-28 h-full flex items-center">
+            <div className="max-w-3xl">
+              <div className="flex items-center gap-3 text-primary-foreground/80 text-sm uppercase tracking-wider mb-5">
+                <span>Home</span>
+                <ChevronRight className="w-4 h-4" />
+                <span className="font-semibold">Dispute Resolution</span>
+              </div>
 
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-primary-foreground mb-5 leading-tight">
-          Dispute Resolution Form
-        </h1>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-primary-foreground mb-5 leading-tight">
+                Dispute Resolution Form
+              </h1>
 
-        <div className="flex flex-col sm:flex-row gap-4">
-          <a
-            href="#form"
-            className="btn-secondary inline-flex items-center gap-3 px-7 py-4 text-base font-semibold group shadow-md"
-          >
-            Submit Dispute Now
-            <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-          </a>
-          <a
-            href="tel:0800280180"
-            className="inline-flex items-center gap-3 px-6 py-4 bg-primary-foreground/10 backdrop-blur-sm rounded-full text-primary-foreground hover:bg-primary-foreground/20 transition-all text-base"
-          >
-            <Phone className="w-5 h-5" />
-            Need Help? Call Us
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <a
+                  href="#form"
+                  className="btn-secondary inline-flex items-center gap-3 px-7 py-4 text-base font-semibold group shadow-md"
+                >
+                  Submit Dispute Now
+                  <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </a>
+                <a
+                  href="tel:0800280180"
+                  className="inline-flex items-center gap-3 px-6 py-4 bg-primary-foreground/10 backdrop-blur-sm rounded-full text-primary-foreground hover:bg-primary-foreground/20 transition-all text-base"
+                >
+                  <Phone className="w-5 h-5" />
+                  Need Help? Call Us
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
 
-
-
-        {/* 3D Expand-on-Hover Card – unchanged */}
+        {/* 3D Expand-on-Hover Card */}
         <section className="py-16 -mt-12 relative z-10">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
@@ -147,7 +155,7 @@ const DisputeResolution = () => {
                 initial="rest"
                 whileHover="hover"
                 onClick={() => {
-                  document.getElementById('form')?.scrollIntoView({ behavior: 'smooth' });
+                  document.getElementById("form")?.scrollIntoView({ behavior: "smooth" });
                 }}
               >
                 <motion.div
@@ -184,7 +192,7 @@ const DisputeResolution = () => {
                 </motion.div>
               </motion.div>
 
-              {/* Trust facts – unchanged */}
+              {/* Trust facts */}
               <div className="grid md:grid-cols-3 gap-6 mt-12 text-center">
                 <div>
                   <div className="w-14 h-14 rounded-2xl bg-secondary/10 flex items-center justify-center mx-auto mb-3">
@@ -212,7 +220,7 @@ const DisputeResolution = () => {
           </div>
         </section>
 
-        {/* Form – unchanged */}
+        {/* Form Section */}
         <section id="form" className="py-16 bg-muted">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
@@ -230,7 +238,8 @@ const DisputeResolution = () => {
                   <div>
                     <h4 className="font-bold text-lg text-foreground mb-2">Dispute Submitted Successfully</h4>
                     <p className="text-sm text-muted-foreground">
-                      Reference: #DR-{Math.floor(Math.random() * 1000000).toString().padStart(6, "0")}<br />
+                      Reference: #DR-{Math.floor(Math.random() * 1000000).toString().padStart(6, "0")}
+                      <br />
                       We will contact you within 5-7 business days.
                     </p>
                   </div>
@@ -246,17 +255,74 @@ const DisputeResolution = () => {
                   <div className="grid md:grid-cols-2 gap-5">
                     <div>
                       <label className="block text-sm font-semibold text-foreground mb-2">
-                        Full Name <span className="text-red-500">*</span>
+                        First Name <span className="text-red-500">*</span>
                       </label>
                       <input
                         type="text"
-                        name="fullName"
-                        value={formData.fullName}
+                        name="firstName"
+                        value={formData.firstName}
                         onChange={handleChange}
                         required
                         className="w-full px-4 py-3 rounded-xl border border-muted focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all bg-background"
                       />
                     </div>
+
+                    <div>
+                      <label className="block text-sm font-semibold text-foreground mb-2">
+                        Last Name <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        name="lastName"
+                        value={formData.lastName}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-4 py-3 rounded-xl border border-muted focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all bg-background"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-semibold text-foreground mb-2">
+                        Full Residential Address <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        name="residentialAddress"
+                        value={formData.residentialAddress}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-4 py-3 rounded-xl border border-muted focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all bg-background"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-semibold text-foreground mb-2">
+                        Country <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        name="country"
+                        value={formData.country}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-4 py-3 rounded-xl border border-muted focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all bg-background"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-semibold text-foreground mb-2">
+                        City <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        name="city"
+                        value={formData.city}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-4 py-3 rounded-xl border border-muted focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all bg-background"
+                      />
+                    </div>
+
                     <div>
                       <label className="block text-sm font-semibold text-foreground mb-2">
                         Email Address <span className="text-red-500">*</span>
@@ -270,6 +336,7 @@ const DisputeResolution = () => {
                         className="w-full px-4 py-3 rounded-xl border border-muted focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all bg-background"
                       />
                     </div>
+
                     <div className="md:col-span-2">
                       <label className="block text-sm font-semibold text-foreground mb-2">
                         Phone Number <span className="text-red-500">*</span>
@@ -291,35 +358,45 @@ const DisputeResolution = () => {
                   <h3 className="text-lg font-heading font-bold mb-5 flex items-center gap-3">
                     <AlertCircle className="w-5 h-5 text-secondary" /> Dispute Details
                   </h3>
-                  <div className="space-y-5">
-                    <div>
-                      <label className="block text-sm font-semibold text-foreground mb-2">
-                        Credit Report Reference Number <span className="text-red-500">*</span>
-                      </label>
-                      <input
-                        type="text"
-                        name="reportReference"
-                        value={formData.reportReference}
-                        onChange={handleChange}
-                        required
-                        placeholder="e.g., CRB-12345678"
-                        className="w-full px-4 py-3 rounded-xl border border-muted focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all bg-background"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-semibold text-foreground mb-2">
-                        Nature of Dispute <span className="text-red-500">*</span>
-                      </label>
-                      <textarea
-                        name="disputeNature"
-                        value={formData.disputeNature}
-                        onChange={handleChange}
-                        required
-                        rows={5}
-                        placeholder="Describe the inaccurate information in detail..."
-                        className="w-full px-4 py-3 rounded-xl border border-muted focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all bg-background resize-none"
-                      />
-                    </div>
+
+                  <div className="mb-5">
+                    <label className="block text-sm font-semibold text-foreground mb-2">
+                      Dispute Type <span className="text-red-500">*</span>
+                    </label>
+                    <select
+                      name="disputeType"
+                      value={formData.disputeType}
+              
+                      required
+                      className="w-full px-4 py-3 rounded-xl border border-muted focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all bg-background appearance-none cursor-pointer"
+                    >
+                      <option value="" disabled>
+                        Select dispute type
+                      </option>
+                      <option value="wrong_name">Wrong Name</option>
+                      <option value="wrong_account_number">Wrong Account Number</option>
+                      <option value="wrong_credit_account_balance">Wrong Credit Account Balance</option>
+                      <option value="wrong_phone_number">Wrong Phone Number</option>
+                      <option value="wrong_date_of_birth">Wrong Date of Birth</option>
+                      <option value="wrong_address_company_details">Wrong Address Company Details</option>
+                      <option value="erroneous_fees_charges">Erroneous Fee/Charges</option>
+                      <option value="unknown_credit_account">Unknown Credit Account</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-foreground mb-2">
+                      Nature of Dispute <span className="text-red-500">*</span>
+                    </label>
+                    <textarea
+                      name="disputeNature"
+                      value={formData.disputeNature}
+                      onChange={handleChange}
+                      required
+                      rows={5}
+                      placeholder="Describe the inaccurate information in detail..."
+                      className="w-full px-4 py-3 rounded-xl border border-muted focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all bg-background resize-none"
+                    />
                   </div>
                 </div>
 
@@ -353,7 +430,7 @@ const DisputeResolution = () => {
                   </label>
                 </div>
 
-                {/* Submit */}
+                {/* Submit Button */}
                 <div className="pt-6">
                   <button
                     type="submit"
@@ -375,12 +452,11 @@ const DisputeResolution = () => {
           </div>
         </section>
 
-        {/* Help CTA – now uses hero background image, no full overlay */}
+        {/* Help CTA */}
         <section
           className="relative py-16 bg-cover bg-center bg-no-repeat text-foreground"
           style={{ backgroundImage: `url(${heroImage})` }}
         >
-          {/* Subtle semi-transparent backdrop behind content only */}
           <div className="absolute inset-0 bg-white/65 md:bg-white/55" />
 
           <div className="relative z-10 container mx-auto px-4 text-center">
